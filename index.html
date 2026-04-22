@@ -128,23 +128,43 @@
 
 <!-- Bootstrap JS -->
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+<div class="container my-5">
+  <h2 class="text-center section-title text-primary"><i class="bi bi-cloud-sun"></i> Clima en Acacías</h2>
+  <div class="row justify-content-center">
+    <div class="col-md-6">
+      <div class="card shadow-lg border-info">
+        <div class="card-body text-center">
+          <h4 id="temp" class="display-5 fw-bold text-info">-- °C</h4>
+          <p id="humedad">Humedad: --%</p>
+          <p id="sensacion">Sensación térmica: -- °C</p>
+          <p id="viento">Viento: -- km/h</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
 
-<!-- Script clima -->
 <script>
 async function cargarClima() {
   try {
-    const res = await fetch("https://api.open-meteo.com/v1/forecast?latitude=3.986&longitude=-73.765&current_weather=true");
+    const apiKey = "802db73c81f0f8075edcbc6f0d7fe581"; // tu clave
+    const lat = 3.986; // coordenadas exactas de Acacías
+    const lon = -73.765;
+    const res = await fetch(`https://api.openweathermap.org/data/2.5/weather?lat=${lat}&lon=${lon}&appid=${apiKey}&units=metric&lang=es`);
     const data = await res.json();
-    document.getElementById("temp").innerText = data.current_weather.temperature + " °C";
-    document.getElementById("humedad").innerText = "Viento: " + data.current_weather.windspeed + " km/h";
-    document.getElementById("sensacion").innerText = "Código clima: " + data.current_weather.weathercode;
+
+    document.getElementById("temp").innerText = data.main.temp + " °C";
+    document.getElementById("humedad").innerText = "Humedad: " + data.main.humidity + "%";
+    document.getElementById("sensacion").innerText = "Sensación térmica: " + data.main.feels_like + " °C";
+    document.getElementById("viento").innerText = "Viento: " + data.wind.speed + " km/h";
   } catch (e) {
     document.getElementById("temp").innerText = "Error cargando clima";
   }
 }
 cargarClima();
-setInterval(cargarClima, 60000);
+setInterval(cargarClima, 60000); // refresca cada minuto
 </script>
+
 
 <!-- Script anomalías dinámicas -->
 <script>
