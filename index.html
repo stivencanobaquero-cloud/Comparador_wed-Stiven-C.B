@@ -10,557 +10,149 @@
   <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons/font/bootstrap-icons.css" rel="stylesheet">
 
   <style>
-    :root{
-      --accent:#ffb703;
-      --dark:#0f1724;
-      --muted:#6b7280;
-      --glass: rgba(255,255,255,0.06);
+    body {
+      font-family: Arial, sans-serif;
+      background: #f8f9fa;
     }
-
-    html,body{height:100%}
-    body{
-      font-family: Inter, system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial;
-      background: linear-gradient(180deg,#071426 0%, #0b2540 45%, #071426 100%);
-      color:#e6eef8;
-      -webkit-font-smoothing:antialiased;
-      -moz-osx-font-smoothing:grayscale;
+    .navbar { background-color: #212529; }
+    .navbar-brand { color: #ffc107 !important; font-weight: bold; }
+    .hero {
+      background: url('https://images.unsplash.com/photo-1504674900247-0877df9cc836') center/cover no-repeat;
+      color: white;
+      text-shadow: 2px 2px 4px #000;
+      padding: 120px 20px;
+      text-align: center;
     }
-
-    .navbar{
-      background: linear-gradient(90deg, rgba(2,6,23,0.9), rgba(6,18,34,0.9));
-      border-bottom: 1px solid rgba(255,255,255,0.04);
-      backdrop-filter: blur(6px);
-    }
-    .brand-acacias{
-      color: var(--accent);
-      font-weight:700;
-      letter-spacing:0.6px;
-    }
-
-    .hero{
-      padding: 72px 16px;
-      text-align:center;
-      background-image: linear-gradient(180deg, rgba(3,7,18,0.35), rgba(3,7,18,0.6)), url('https://images.unsplash.com/photo-1503264116251-35a269479413?q=80&w=1600&auto=format&fit=crop&ixlib=rb-4.0.3&s=3b3b2b9f3b6b0f6b2f3f2f3f2f3f2f3f');
-      background-size:cover;
-      background-position:center;
-      border-bottom: 1px solid rgba(255,255,255,0.03);
-    }
-    .hero h1{font-size:2.6rem; margin-bottom:8px; text-shadow: 0 6px 18px rgba(0,0,0,0.6);}
-    .hero p{color: #dbeafe; font-size:1.05rem; margin-bottom:0;}
-
-    .weather-card{
-      background: linear-gradient(180deg, rgba(255,255,255,0.03), rgba(255,255,255,0.02));
-      border: 1px solid rgba(255,255,255,0.04);
-      box-shadow: 0 8px 30px rgba(2,6,23,0.6);
-      border-radius: 14px;
-    }
-    .temp-big{font-size:3.2rem; font-weight:700; color:var(--accent);}
-
-    .controls .form-select, .controls .btn{
-      border-radius: 10px;
-      background: rgba(255,255,255,0.02);
-      color: #e6eef8;
-      border: 1px solid rgba(255,255,255,0.04);
-    }
-
-    .cards-grid .card{
-      border-radius:12px;
-      overflow:hidden;
-      background: linear-gradient(180deg, rgba(255,255,255,0.02), rgba(255,255,255,0.01));
-      border: 1px solid rgba(255,255,255,0.03);
-      transition: transform .28s ease, box-shadow .28s ease;
-    }
-    .cards-grid .card:hover{
-      transform: translateY(-8px) scale(1.01);
-      box-shadow: 0 18px 40px rgba(2,6,23,0.6);
-    }
-    .card .badge-price{background: linear-gradient(90deg,#16a34a,#22c55e); color:white; font-weight:700;}
-
-    .anomaly-ticker{
-      background: linear-gradient(90deg, rgba(255,255,255,0.02), rgba(255,255,255,0.01));
-      border-radius: 12px;
-      padding: 12px 16px;
-      display:flex;
-      align-items:center;
-      gap:12px;
-      overflow:hidden;
-      border: 1px solid rgba(255,255,255,0.03);
-    }
-    .ticker-list{
-      display:flex;
-      gap:28px;
-      white-space:nowrap;
-      animation: scrollLeft 18s linear infinite;
-    }
-    @keyframes scrollLeft{
-      0%{transform: translateX(0)}
-      100%{transform: translateX(-50%)}
-    }
-
-    footer{padding:28px 0; text-align:center; color:#9fb0d6; font-size:0.95rem; margin-top:48px;}
-
-    @media (max-width:767px){
-      .temp-big{font-size:2.4rem;}
-      .hero{padding:48px 12px;}
-      .ticker-list{animation-duration:28s;}
-    }
+    .card:hover { transform: scale(1.05); transition: 0.3s; }
+    footer { background-color: #212529; color: #fff; padding: 20px; text-align: center; }
   </style>
 </head>
 <body>
 
-  <nav class="navbar navbar-expand-lg py-3">
-    <div class="container">
-      <a class="navbar-brand brand-acacias" href="#">Comparador Acacías</a>
-      <div class="ms-auto d-flex align-items-center gap-2">
-        <span class="text-muted small me-2">Automático • Datos en vivo</span>
-        <button id="refreshAll" class="btn btn-sm btn-outline-light"><i class="bi bi-arrow-clockwise"></i> Actualizar</button>
+<!-- Navbar -->
+<nav class="navbar navbar-expand-lg navbar-dark fixed-top">
+  <div class="container">
+    <a class="navbar-brand" href="#">Comparador Acacías</a>
+  </div>
+</nav>
+
+<!-- Hero -->
+<section class="hero mt-5">
+  <h1 class="display-4">Comparador de Servicios y Clima</h1>
+  <p class="lead">Datos en vivo y precios locales de Acacías, Meta</p>
+</section>
+
+<!-- Clima en vivo -->
+<div class="container my-5">
+  <h2 class="text-center text-primary"><i class="bi bi-cloud-sun"></i> Clima en Acacías</h2>
+  <div class="row justify-content-center">
+    <div class="col-md-6">
+      <div class="card shadow-lg border-info">
+        <div class="card-body text-center">
+          <h4 id="temp" class="display-5 fw-bold text-info">-- °C</h4>
+          <p id="humedad">Humedad: --%</p>
+          <p id="sensacion">Sensación térmica: -- °C</p>
+          <p id="viento">Viento: -- km/h</p>
+        </div>
       </div>
     </div>
-  </nav>
+  </div>
+</div>
 
-  <header class="hero">
-    <div class="container">
-      <h1>Comparador de Precios, Clima y Anomalías — Acacías</h1>
-      <p>Información en tiempo real: clima exacto, precios locales y alertas automáticas para tu comunidad.</p>
-    </div>
-  </header>
+<!-- Comparador -->
+<div class="container my-5">
+  <h2 class="text-center text-success"><i class="bi bi-cash-stack"></i> Comparador de Precios</h2>
+  <table id="tabla-precios" class="table table-striped table-hover shadow">
+    <thead class="table-dark">
+      <tr>
+        <th>Servicio</th>
+        <th>Nombre</th>
+        <th>Precio</th>
+        <th>Contacto</th>
+      </tr>
+    </thead>
+    <tbody></tbody>
+  </table>
+</div>
 
-  <main class="container my-5">
+<!-- Anomalías -->
+<div class="container my-5">
+  <h2 class="text-center text-danger"><i class="bi bi-exclamation-triangle"></i> Anomalías en Acacías</h2>
+  <div class="row" id="anomalias"></div>
+</div>
 
-    <div class="row g-4 align-items-stretch">
-      <div class="col-lg-5">
-        <div class="p-4 weather-card">
-          <div class="d-flex justify-content-between align-items-start">
-            <div>
-              <div class="small text-muted">Ubicación</div>
-              <h3 class="mb-1">Acacías, Meta</h3>
-              <div class="text-muted small">Coordenadas: <strong>3.986, -73.765</strong></div>
-            </div>
-            <div class="text-end">
-              <div class="small text-muted">Última actualización</div>
-              <div id="lastUpdated" class="small">--:--</div>
-            </div>
-          </div>
+<!-- Footer -->
+<footer>
+  <p>&copy; 2026 Comparador Web Acacías | Datos en vivo y análisis local</p>
+</footer>
 
-          <hr class="my-3" style="border-color:rgba(255,255,255,0.03)">
+<!-- Bootstrap JS -->
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
 
-          <div class="text-center">
-            <div id="weatherIcon" style="font-size:48px; margin-bottom:6px;">☀️</div>
-            <div id="temp" class="temp-big">-- °C</div>
-            <div id="desc" class="text-muted mb-2">Cargando...</div>
+<!-- Importar config.js con la clave -->
+<script src="config.js"></script>
 
-            <div class="d-flex justify-content-center gap-3 small text-muted">
-              <div><i class="bi bi-droplet"></i> <span id="humedad">--%</span></div>
-              <div><i class="bi bi-wind"></i> <span id="viento">-- m/s</span></div>
-              <div><i class="bi bi-thermometer-half"></i> <span id="sensacion">-- °C</span></div>
-            </div>
+<!-- Script principal -->
+<script>
+const LAT = 3.986;
+const LON = -73.765;
 
-            <div class="mt-3">
-              <div class="progress" style="height:10px; background:rgba(255,255,255,0.03); border-radius:8px;">
-                <div id="cloudBar" class="progress-bar" role="progressbar" style="width:0%; background:linear-gradient(90deg,#60a5fa,#3b82f6)"></div>
-              </div>
-              <div class="small text-muted mt-2">Nubosidad: <span id="clouds">--%</span></div>
-            </div>
+// Clima en vivo
+async function cargarClima() {
+  try {
+    const res = await fetch(`https://api.openweathermap.org/data/2.5/weather?lat=${LAT}&lon=${LON}&appid=${OPENWEATHER_KEY}&units=metric&lang=es`);
+    const data = await res.json();
+
+    document.getElementById("temp").innerText = Math.round(data.main.temp) + " °C";
+    document.getElementById("humedad").innerText = "Humedad: " + data.main.humidity + "%";
+    document.getElementById("sensacion").innerText = "Sensación térmica: " + Math.round(data.main.feels_like) + " °C";
+    document.getElementById("viento").innerText = "Viento: " + data.wind.speed + " m/s";
+  } catch (e) {
+    document.getElementById("temp").innerText = "Error cargando clima";
+  }
+}
+cargarClima();
+setInterval(cargarClima, 60000);
+
+// Comparador dinámico
+async function cargarPrecios() {
+  const res = await fetch("data.json");
+  const lista = await res.json();
+  const tabla = document.querySelector("#tabla-precios tbody");
+  tabla.innerHTML = "";
+  lista.forEach(item => {
+    tabla.innerHTML += `
+      <tr>
+        <td>${item.servicio}</td>
+        <td>${item.nombre}</td>
+        <td>${item.precio}</td>
+        <td>${item.contacto}</td>
+      </tr>`;
+  });
+}
+cargarPrecios();
+
+// Anomalías dinámicas
+async function cargarAnomalias() {
+  const res = await fetch("anomalias.json");
+  const lista = await res.json();
+  const cont = document.getElementById("anomalias");
+  cont.innerHTML = "";
+  lista.forEach(a => {
+    cont.innerHTML += `
+      <div class="col-md-4 mb-3">
+        <div class="card border-${a.tipo} shadow">
+          <div class="card-body text-center">
+            <h5 class="card-title text-${a.tipo}">${a.titulo}</h5>
+            <p class="card-text">${a.texto}</p>
           </div>
         </div>
+      </div>`;
+  });
+}
+cargarAnomalias();
+setInterval(cargarAnomalias, 60000);
+</script>
 
-        <div class="mt-4 anomaly-ticker">
-          <i class="bi bi-exclamation-triangle-fill text-warning" style="font-size:20px"></i>
-          <div style="flex:1; overflow:hidden">
-            <div id="tickerInner" class="ticker-list"></div>
-          </div>
-          <div class="ms-3 small text-muted">Actualiza automáticamente</div>
-        </div>
-      </div>
-
-      <div class="col-lg-7">
-        <div class="d-flex gap-3 mb-3 controls">
-          <select id="filterCategory" class="form-select">
-            <option value="all">Mostrar todo</option>
-            <option value="Restaurante">Restaurantes</option>
-            <option value="Restaurante Casero">Restaurante Casero</option>
-            <option value="Gimnasio">Gimnasios</option>
-            <option value="Fruber">Frubers / Plaza</option>
-          </select>
-
-          <select id="sortBy" class="form-select" style="max-width:220px">
-            <option value="default">Orden: Recomendado</option>
-            <option value="price-asc">Precio: menor → mayor</option>
-            <option value="price-desc">Precio: mayor → menor</option>
-            <option value="name-asc">Nombre A → Z</option>
-          </select>
-
-          <button id="toggleView" class="btn btn-outline-light" title="Cambiar vista"><i class="bi bi-grid-3x3-gap-fill"></i></button>
-        </div>
-
-        <div id="mainCarousel" class="carousel slide mb-4 shadow-lg" data-bs-ride="carousel">
-          <div class="carousel-inner rounded-3 overflow-hidden">
-            <div class="carousel-item active">
-              <img src="https://images.unsplash.com/photo-1541542684-6e6f8f8f8f8f?q=80&w=1600&auto=format&fit=crop" class="d-block w-100" alt="Acacías 1" style="height:260px; object-fit:cover;">
-              <div class="carousel-caption d-none d-md-block text-start" style="left:1rem; right:auto;">
-                <h5 class="text-shadow">Restaurantes locales</h5>
-                <p class="small text-shadow">Sabores caseros y menús económicos en Acacías.</p>
-              </div>
-            </div>
-            <div class="carousel-item">
-              <img src="https://images.unsplash.com/photo-1554284126-aa88f22d8d3b?q=80&w=1600&auto=format&fit=crop" class="d-block w-100" alt="Gym" style="height:260px; object-fit:cover;">
-              <div class="carousel-caption d-none d-md-block text-start" style="left:1rem; right:auto;">
-                <h5 class="text-shadow">Gimnasios y entrenamiento</h5>
-                <p class="small text-shadow">Encuentra la mejor opción para tu rutina.</p>
-              </div>
-            </div>
-            <div class="carousel-item">
-              <img src="https://images.unsplash.com/photo-1506806732259-39c2d0268443?q=80&w=1600&auto=format&fit=crop" class="d-block w-100" alt="Plaza" style="height:260px; object-fit:cover;">
-              <div class="carousel-caption d-none d-md-block text-start" style="left:1rem; right:auto;">
-                <h5 class="text-shadow">Frubers y plaza de mercado</h5>
-                <p class="small text-shadow">Precios frescos y ofertas diarias.</p>
-              </div>
-            </div>
-          </div>
-          <button class="carousel-control-prev" type="button" data-bs-target="#mainCarousel" data-bs-slide="prev">
-            <span class="carousel-control-prev-icon" aria-hidden="true"></span>
-          </button>
-          <button class="carousel-control-next" type="button" data-bs-target="#mainCarousel" data-bs-slide="next">
-            <span class="carousel-control-next-icon" aria-hidden="true"></span>
-          </button>
-        </div>
-
-        <div id="cardsContainer" class="cards-grid row g-3"></div>
-      </div>
-    </div>
-
-    <section class="mt-5">
-      <div class="d-flex justify-content-between align-items-center mb-3">
-        <h3 class="mb-0">Comparador completo</h3>
-        <div class="small text-muted">Datos cargados desde <code>data.json</code> • Actualiza automáticamente</div>
-      </div>
-
-      <div class="table-responsive shadow-lg rounded-3">
-        <table id="tabla-precios" class="table table-dark table-striped mb-0" style="min-width:900px;">
-          <thead>
-            <tr>
-              <th>Servicio</th>
-              <th>Nombre</th>
-              <th>Precio</th>
-              <th>Contacto</th>
-              <th>Notas</th>
-            </tr>
-          </thead>
-          <tbody></tbody>
-        </table>
-      </div>
-    </section>
-
-  </main>
-
-  <footer>
-    © 2026 Comparador Acacías — Datos en vivo • Hecho para la comunidad
-  </footer>
-
-  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
-
-  <script>
-    const OPENWEATHER_KEY = "a3b100b66fda8654488cea71329ae5a8";
-    const LAT = 3.986;
-    const LON = -73.765;
-    const DATA_JSON = "data.json";
-    const ANOMALIAS_JSON = "anomalias.json";
-    const WEATHER_INTERVAL = 60_000;
-    const DATA_INTERVAL = 90_000;
-    const ANOMALIAS_INTERVAL = 60_000;
-
-    function formatTime(date = new Date()){
-      return date.toLocaleTimeString('es-CO', {hour:'2-digit', minute:'2-digit'});
-    }
-
-    function extractNumericPrice(priceStr){
-      if(!priceStr) return null;
-      const matches = priceStr.match(/\\d{1,3}(?:[.,]\\d{3})*(?:[.,]\\d+)?/g);
-      if(!matches) return null;
-      const raw = matches[0].replace(/\\./g,'').replace(/,/g,'.');
-      const num = parseFloat(raw);
-      return isNaN(num) ? null : num;
-    }
-
-    async function fetchWeather(){
-      try{
-        const url = `https://api.openweathermap.org/data/2.5/weather?lat=${LAT}&lon=${LON}&appid=${OPENWEATHER_KEY}&units=metric&lang=es`;
-        const res = await fetch(url);
-        if(!res.ok) throw new Error("OpenWeather error " + res.status);
-        const data = await res.json();
-
-        const tempEl = document.getElementById("temp");
-        const humEl = document.getElementById("humedad");
-        const feelEl = document.getElementById("sensacion");
-        const windEl = document.getElementById("viento");
-        const descEl = document.getElementById("desc");
-        const cloudsEl = document.getElementById("clouds");
-        const cloudBar = document.getElementById("cloudBar");
-        const iconEl = document.getElementById("weatherIcon");
-        const lastUpdated = document.getElementById("lastUpdated");
-
-        tempEl.innerText = Math.round(data.main.temp) + " °C";
-        humEl.innerText = data.main.humidity + "%";
-        feelEl.innerText = Math.round(data.main.feels_like) + " °C";
-        windEl.innerText = (data.wind && data.wind.speed ? data.wind.speed : "--") + " m/s";
-        descEl.innerText = (data.weather && data.weather[0] && data.weather[0].description) ? capitalize(data.weather[0].description) : "—";
-        cloudsEl.innerText = (data.clouds && data.clouds.all) ? data.clouds.all + "%" : "--";
-        cloudBar.style.width = ((data.clouds && data.clouds.all) ? data.clouds.all : 0) + "%";
-        lastUpdated.innerText = formatTime();
-
-        const code = data.weather && data.weather[0] && data.weather[0].icon ? data.weather[0].icon : "01d";
-        iconEl.innerHTML = mapIconToEmoji(code);
-
-      }catch(err){
-        console.error("Error fetching weather:", err);
-        document.getElementById("temp").innerText = "Error";
-        document.getElementById("desc").innerText = "No se pudo obtener clima";
-      }
-    }
-
-    function mapIconToEmoji(icon){
-      if(!icon) return "☀️";
-      const base = icon.slice(0,2);
-      switch(base){
-        case "01": return "☀️";
-        case "02": return "🌤️";
-        case "03": return "☁️";
-        case "04": return "☁️";
-        case "09": return "🌧️";
-        case "10": return "🌦️";
-        case "11": return "⛈️";
-        case "13": return "❄️";
-        case "50": return "🌫️";
-        default: return "☀️";
-      }
-    }
-
-    function capitalize(s){ return s ? s.charAt(0).toUpperCase() + s.slice(1) : s; }
-
-    let rawData = [];
-
-    async function loadData(){
-      try{
-        const res = await fetch(DATA_JSON + "?t=" + Date.now());
-        if(!res.ok) throw new Error("data.json not found");
-        const list = await res.json();
-        rawData = Array.isArray(list) ? list : [];
-        renderCards(rawData);
-        renderTable(rawData);
-      }catch(err){
-        console.error("Error loading data.json:", err);
-        document.getElementById("cardsContainer").innerHTML = `<div class="col-12"><div class="p-4 text-center text-muted">No se pudo cargar data.json</div></div>`;
-      }
-    }
-
-    function renderCards(list){
-      const container = document.getElementById("cardsContainer");
-      container.innerHTML = "";
-      const filter = document.getElementById("filterCategory").value;
-      const sort = document.getElementById("sortBy").value;
-
-      let items = list.slice();
-      if(filter && filter !== "all"){
-        items = items.filter(i => i.servicio === filter);
-      }
-
-      if(sort === "price-asc" || sort === "price-desc"){
-        items.sort((a,b) => {
-          const pa = extractNumericPrice(a.precio) ?? Infinity;
-          const pb = extractNumericPrice(b.precio) ?? Infinity;
-          return sort === "price-asc" ? pa - pb : pb - pa;
-        });
-      } else if(sort === "name-asc"){
-        items.sort((a,b) => (a.nombre||"").localeCompare(b.nombre||""));
-      }
-
-      items.forEach((it, idx) => {
-        const priceBadge = extractNumericPrice(it.precio) ? `<span class="badge badge-price px-2 py-1">${it.precio}</span>` : `<span class="badge bg-secondary px-2 py-1">${it.precio}</span>`;
-        const img = it.imagen ? it.imagen : placeholderImageFor(it.servicio);
-        const notes = it.notas ? it.notas : "";
-        const contact = it.contacto ? (it.contacto.startsWith("http") ? `<a href="${it.contacto}" target="_blank" class="link-light">Ver</a>` : `<a href="tel:${it.contacto}" class="link-light">${it.contacto}</a>`) : "—";
-
-        const col = document.createElement("div");
-        col.className = "col-md-6 col-lg-4";
-        col.innerHTML = `
-          <div class="card h-100">
-            <img src="${img}" alt="${escapeHtml(it.nombre)}" style="height:160px; object-fit:cover; width:100%;">
-            <div class="card-body d-flex flex-column">
-              <div class="d-flex justify-content-between align-items-start mb-2">
-                <div>
-                  <h5 class="mb-0">${escapeHtml(it.nombre)}</h5>
-                  <div class="small text-muted">${escapeHtml(it.servicio)}</div>
-                </div>
-                <div>${priceBadge}</div>
-              </div>
-              <p class="small text-muted mb-3" style="flex:1">${escapeHtml(it.descripcion || "")}</p>
-              <div class="d-flex justify-content-between align-items-center">
-                <div class="small text-muted">Contacto: ${contact}</div>
-                <div><button class="btn btn-sm btn-outline-light btn-details" data-idx="${idx}"><i class="bi bi-info-circle"></i></button></div>
-              </div>
-            </div>
-          </div>`;
-        container.appendChild(col);
-      });
-
-      document.querySelectorAll(".btn-details").forEach(btn => {
-        btn.addEventListener("click", (e) => {
-          const idx = parseInt(btn.getAttribute("data-idx"));
-          const item = items[idx];
-          if(!item) return;
-          showItemModal(item);
-        });
-      });
-    }
-
-    function renderTable(list){
-      const tbody = document.querySelector("#tabla-precios tbody");
-      tbody.innerHTML = "";
-      const filter = document.getElementById("filterCategory").value;
-      const sort = document.getElementById("sortBy").value;
-
-      let items = list.slice();
-      if(filter && filter !== "all"){
-        items = items.filter(i => i.servicio === filter);
-      }
-      if(sort === "price-asc" || sort === "price-desc"){
-        items.sort((a,b) => {
-          const pa = extractNumericPrice(a.precio) ?? Infinity;
-          const pb = extractNumericPrice(b.precio) ?? Infinity;
-          return sort === "price-asc" ? pa - pb : pb - pa;
-        });
-      } else if(sort === "name-asc"){
-        items.sort((a,b) => (a.nombre||"").localeCompare(b.nombre||""));
-      }
-
-      items.forEach(it => {
-        const contact = it.contacto ? (it.contacto.startsWith("http") ? `<a href="${it.contacto}" target="_blank" class="link-light">Ver</a>` : `<a href="tel:${it.contacto}" class="link-light">${it.contacto}</a>`) : "—";
-        const notas = it.notas ? escapeHtml(it.notas) : "";
-        const tr = document.createElement("tr");
-        tr.innerHTML = `<td>${escapeHtml(it.servicio)}</td>
-                        <td>${escapeHtml(it.nombre)}</td>
-                        <td>${escapeHtml(it.precio)}</td>
-                        <td>${contact}</td>
-                        <td class="text-muted small">${notas}</td>`;
-        tbody.appendChild(tr);
-      });
-    }
-
-    function placeholderImageFor(service){
-      if(!service) return "https://images.unsplash.com/photo-1504674900247-0877df9cc836?q=80&w=1200&auto=format&fit=crop";
-      if(service.toLowerCase().includes("restaurante")) return "https://images.unsplash.com/photo-1541542684-6e6f8f8f8f8f?q=80&w=1200&auto=format&fit=crop";
-      if(service.toLowerCase().includes("gimnasio") || service.toLowerCase().includes("gym")) return "https://images.unsplash.com/photo-1554284126-aa88f22d8d3b?q=80&w=1200&auto=format&fit=crop";
-      if(service.toLowerCase().includes("fruber") || service.toLowerCase().includes("fruta") || service.toLowerCase().includes("plaza")) return "https://images.unsplash.com/photo-1506806732259-39c2d0268443?q=80&w=1200&auto=format&fit=crop";
-      return "https://images.unsplash.com/photo-1504674900247-0877df9cc836?q=80&w=1200&auto=format&fit=crop";
-    }
-
-    function escapeHtml(s){
-      if(!s) return "";
-      return s.replaceAll("&","&amp;").replaceAll("<","&lt;").replaceAll(">","&gt;");
-    }
-
-    let anomaliesCache = [];
-
-    async function loadAnomalies(){
-      try{
-        const res = await fetch(ANOMALIAS_JSON + "?t=" + Date.now());
-        if(!res.ok) throw new Error("anomalias.json not found");
-        const list = await res.json();
-        anomaliesCache = Array.isArray(list) ? list : [];
-        renderTicker(anomaliesCache);
-        renderAnomalyCards(anomaliesCache);
-      }catch(err){
-        console.error("Error loading anomalies:", err);
-        document.getElementById("tickerInner").innerHTML = `<div class="small text-muted">No se pudo cargar anomalías</div>`;
-      }
-    }
-
-    function renderTicker(list){
-      const ticker = document.getElementById("tickerInner");
-      if(!list || list.length === 0){
-        ticker.innerHTML = `<div class="small text-muted">Sin anomalías</div>`;
-        return;
-      }
-      const items = list.map(a => `<div class="text-warning"><strong>${escapeHtml(a.titulo)}:</strong> ${escapeHtml(a.texto)}</div>`).join('<div style="width:28px"></div>');
-      ticker.innerHTML = items + '<div style="width:60px"></div>' + items;
-    }
-
-    function renderAnomalyCards(list){
-      const container = document.getElementById("anomalias");
-      if(!container) return;
-      container.innerHTML = "";
-      list.forEach(a => {
-        const col = document.createElement("div");
-        col.className = "col-md-4 mb-3";
-        const type = a.tipo || "info";
-        col.innerHTML = `
-          <div class="card border-${type} shadow">
-            <div class="card-body text-center">
-              <h5 class="card-title text-${type}">${escapeHtml(a.titulo)}</h5>
-              <p class="card-text">${escapeHtml(a.texto)}</p>
-            </div>
-          </div>`;
-        container.appendChild(col);
-      });
-    }
-
-    function showItemModal(item){
-      const lines = [
-        `Nombre: ${item.nombre || "—"}`,
-        `Servicio: ${item.servicio || "—"}`,
-        `Precio: ${item.precio || "—"}`,
-        `Contacto: ${item.contacto || "—"}`,
-        `Notas: ${item.notas || "—"}`
-      ];
-      alert(lines.join("\n"));
-    }
-
-    document.getElementById("filterCategory").addEventListener("change", () => {
-      renderCards(rawData);
-      renderTable(rawData);
-    });
-    document.getElementById("sortBy").addEventListener("change", () => {
-      renderCards(rawData);
-      renderTable(rawData);
-    });
-    document.getElementById("refreshAll").addEventListener("click", () => {
-      manualRefresh();
-    });
-
-    function manualRefresh(){
-      fetchWeather();
-      loadData();
-      loadAnomalies();
-    }
-
-    async function loadData(){
-      try{
-        const res = await fetch(DATA_JSON + "?t=" + Date.now());
-        if(!res.ok) throw new Error("data.json not found");
-        const list = await res.json();
-        rawData = Array.isArray(list) ? list : [];
-        renderCards(rawData);
-        renderTable(rawData);
-      }catch(err){
-        console.error("Error loading data.json:", err);
-        document.getElementById("cardsContainer").innerHTML = `<div class="col-12"><div class="p-4 text-center text-muted">No se pudo cargar data.json</div></div>`;
-      }
-    }
-
-    fetchWeather();
-    loadData();
-    loadAnomalies();
-
-    setInterval(fetchWeather, WEATHER_INTERVAL);
-    setInterval(loadData, DATA_INTERVAL);
-    setInterval(loadAnomalies, ANOMALIAS_INTERVAL);
-
-    window.addEventListener('pageshow', () => {
-      fetchWeather();
-      loadData();
-      loadAnomalies();
-    });
-
-  </script>
 </body>
 </html>
