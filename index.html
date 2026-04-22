@@ -9,11 +9,18 @@
   <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons/font/bootstrap-icons.css" rel="stylesheet">
   <style>
     body { background: #f8f9fa; }
-    .navbar { background-color: #343a40; }
+    .navbar { background-color: #212529; }
     .navbar-brand { color: #ffc107 !important; font-weight: bold; }
-    .hero { background: linear-gradient(to right, #6c757d, #495057); color: white; padding: 60px 20px; text-align: center; }
+    .hero {
+      background: url('https://images.unsplash.com/photo-1504674900247-0877df9cc836') center/cover no-repeat;
+      color: white;
+      text-shadow: 2px 2px 4px #000;
+      padding: 120px 20px;
+      text-align: center;
+    }
     .card:hover { transform: scale(1.05); transition: 0.3s; }
-    footer { background-color: #343a40; color: #fff; padding: 20px; text-align: center; }
+    .section-title { margin-bottom: 40px; font-weight: bold; }
+    footer { background-color: #212529; color: #fff; padding: 20px; text-align: center; }
   </style>
 </head>
 <body>
@@ -28,23 +35,28 @@
 <!-- Hero -->
 <section class="hero mt-5">
   <h1 class="display-4">Comparador de Servicios y Clima</h1>
-  <p class="lead">Datos en vivo de Acacías, Meta</p>
+  <p class="lead">Datos en vivo y precios locales de Acacías, Meta</p>
 </section>
 
 <!-- Clima en vivo -->
 <div class="container my-5">
-  <h2 class="text-center mb-4"><i class="bi bi-cloud-sun"></i> Clima en Acacías</h2>
-  <div class="card shadow text-center">
-    <div class="card-body">
-      <h4 id="temp">Cargando temperatura...</h4>
-      <p id="cond">Actualizando...</p>
+  <h2 class="text-center section-title text-primary"><i class="bi bi-cloud-sun"></i> Clima en Acacías</h2>
+  <div class="row justify-content-center">
+    <div class="col-md-6">
+      <div class="card shadow-lg border-info">
+        <div class="card-body text-center">
+          <h4 id="temp" class="display-5 fw-bold text-info">-- °C</h4>
+          <p id="humedad">Humedad: --%</p>
+          <p id="sensacion">Sensación térmica: -- °C</p>
+        </div>
+      </div>
     </div>
   </div>
 </div>
 
 <!-- Comparador de precios -->
 <div class="container my-5">
-  <h2 class="text-center mb-4"><i class="bi bi-cash-stack"></i> Comparador de Precios</h2>
+  <h2 class="text-center section-title text-success"><i class="bi bi-cash-stack"></i> Comparador de Precios</h2>
   <table class="table table-striped table-hover shadow">
     <thead class="table-dark">
       <tr>
@@ -62,16 +74,40 @@
         <td><a href="tel:3177724402">3177724402</a></td>
       </tr>
       <tr>
+        <td>Restaurante</td>
+        <td>El Sabor Llanero</td>
+        <td>$12.000 almuerzo</td>
+        <td>3109876543</td>
+      </tr>
+      <tr>
+        <td>Restaurante</td>
+        <td>La Parrilla Acacireña</td>
+        <td>$15.000 menú especial</td>
+        <td>3124567890</td>
+      </tr>
+      <tr>
         <td>Gimnasio</td>
         <td>Power Gym</td>
         <td>$70.000 mensual</td>
         <td>3101234567</td>
       </tr>
       <tr>
-        <td>Plaza de Mercado</td>
-        <td>Frutas y Verduras</td>
+        <td>Gimnasio</td>
+        <td>Fitness Center Acacías</td>
+        <td>$80.000 mensual</td>
+        <td>3112223344</td>
+      </tr>
+      <tr>
+        <td>Fruber</td>
+        <td>Frutas del Llano</td>
         <td>Tomate $3.000/kg, Plátano $2.500/kg</td>
         <td>Plaza Central</td>
+      </tr>
+      <tr>
+        <td>Fruber</td>
+        <td>Verduras La Esperanza</td>
+        <td>Papa $2.800/kg, Cebolla $3.200/kg</td>
+        <td>Cra 20 #15</td>
       </tr>
     </tbody>
   </table>
@@ -79,32 +115,9 @@
 
 <!-- Anomalías -->
 <div class="container my-5">
-  <h2 class="text-center mb-4"><i class="bi bi-exclamation-triangle"></i> Anomalías Detectadas</h2>
-  <div class="row">
-    <div class="col-md-4">
-      <div class="card border-danger shadow">
-        <div class="card-body text-center">
-          <h5 class="card-title text-danger">Precio de transporte</h5>
-          <p class="card-text">Aumento inesperado del 15% en rutas urbanas.</p>
-        </div>
-      </div>
-    </div>
-    <div class="col-md-4">
-      <div class="card border-warning shadow">
-        <div class="card-body text-center">
-          <h5 class="card-title text-warning">Clima</h5>
-          <p class="card-text">Variación brusca de temperatura entre estaciones (18°C vs 22°C).</p>
-        </div>
-      </div>
-    </div>
-    <div class="col-md-4">
-      <div class="card border-info shadow">
-        <div class="card-body text-center">
-          <h5 class="card-title text-info">Mercado</h5>
-          <p class="card-text">El precio del tomate subió 40% en una semana.</p>
-        </div>
-      </div>
-    </div>
+  <h2 class="text-center section-title text-danger"><i class="bi bi-exclamation-triangle"></i> Anomalías en Acacías</h2>
+  <div class="row" id="anomalias">
+    <!-- Se llenará dinámicamente -->
   </div>
 </div>
 
@@ -123,13 +136,43 @@ async function cargarClima() {
     const res = await fetch("https://api.open-meteo.com/v1/forecast?latitude=3.986&longitude=-73.765&current_weather=true");
     const data = await res.json();
     document.getElementById("temp").innerText = data.current_weather.temperature + " °C";
-    document.getElementById("cond").innerText = "Viento: " + data.current_weather.windspeed + " km/h";
+    document.getElementById("humedad").innerText = "Viento: " + data.current_weather.windspeed + " km/h";
+    document.getElementById("sensacion").innerText = "Código clima: " + data.current_weather.weathercode;
   } catch (e) {
     document.getElementById("temp").innerText = "Error cargando clima";
   }
 }
 cargarClima();
 setInterval(cargarClima, 60000);
+</script>
+
+<!-- Script anomalías dinámicas -->
+<script>
+const anomalías = [
+  {titulo: "Transporte urbano", texto: "Aumento inesperado del 15% en rutas urbanas.", tipo: "danger"},
+  {titulo: "Clima", texto: "Variación brusca de temperatura entre estaciones (18°C vs 22°C).", tipo: "warning"},
+  {titulo: "Mercado", texto: "El precio del tomate subió 40% en una semana.", tipo: "info"},
+  {titulo: "Energía", texto: "Corte de energía en barrios del centro.", tipo: "danger"},
+  {titulo: "Agua", texto: "Interrupción del servicio por mantenimiento.", tipo: "warning"}
+];
+
+function mostrarAnomalias() {
+  const cont = document.getElementById("anomalias");
+  cont.innerHTML = "";
+  anomalías.forEach(a => {
+    cont.innerHTML += `
+      <div class="col-md-4 mb-3">
+        <div class="card border-${a.tipo} shadow">
+          <div class="card-body text-center">
+            <h5 class="card-title text-${a.tipo}">${a.titulo}</h5>
+            <p class="card-text">${a.texto}</p>
+          </div>
+        </div>
+      </div>`;
+  });
+}
+mostrarAnomalias();
+setInterval(mostrarAnomalias, 60000);
 </script>
 
 </body>
