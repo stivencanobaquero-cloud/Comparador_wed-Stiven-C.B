@@ -31,17 +31,22 @@
     <div id="comparador-precios" class="row"></div>
   </section>
 
-  <!-- Videos -->
+  <!-- Videos (penúltimos) -->
   <section id="videos" class="container my-4">
     <h2 class="mb-3">Videos</h2>
     <div id="video-gallery" class="row"></div>
   </section>
 
-  <!-- Noticias -->
+  <!-- Noticias (anomalias al final) -->
   <section id="anomalias" class="container my-4">
     <h2 class="mb-3">Noticias en Vivo</h2>
     <div id="anomalias-container" class="row"></div>
   </section>
+
+  <!-- Footer opcional -->
+  <footer>
+    <p>© 2026 Comparador Acacías | Proyecto comunitario</p>
+  </footer>
 
   <!-- Scripts -->
   <script src="config.js"></script>
@@ -58,6 +63,52 @@
       }
     }
 
+    // Comparador
+    async function cargarComparador() {
+      try {
+        const resp = await fetch("data.json");
+        const data = await resp.json();
+        const cont = document.getElementById("comparador-precios");
+        cont.innerHTML = "";
+        data.forEach(item => {
+          cont.innerHTML += `
+            <div class="col-md-4 mb-3">
+              <div class="card h-100">
+                <div class="card-body">
+                  <h5 class="card-title">${item.producto}</h5>
+                  <p class="card-text">Precio: ${item.precio}</p>
+                  <p class="card-text">Lugar: ${item.lugar}</p>
+                </div>
+              </div>
+            </div>`;
+        });
+      } catch {
+        document.getElementById("comparador-precios").innerHTML = "Error cargando comparador";
+      }
+    }
+
+    // Videos
+    async function cargarVideos() {
+      try {
+        const resp = await fetch("videos/videos.json");
+        const data = await resp.json();
+        const cont = document.getElementById("video-gallery");
+        cont.innerHTML = "";
+        data.forEach(video => {
+          cont.innerHTML += `
+            <div class="col-md-4 mb-3">
+              <div class="card h-100">
+                <video class="card-img-top" controls>
+                  <source src="videos/${video}" type="video/mp4">
+                </video>
+              </div>
+            </div>`;
+        });
+      } catch {
+        document.getElementById("video-gallery").innerHTML = "Error cargando videos";
+      }
+    }
+
     // Noticias
     async function cargarAnomalias() {
       try {
@@ -69,7 +120,7 @@
           cont.innerHTML += `
             <div class="col-md-4 mb-3">
               <div class="card h-100">
-                <img src="${noticia.urlToImage || ''}" class="card-img-top" alt="imagen noticia">
+                ${noticia.urlToImage ? `<img src="${noticia.urlToImage}" class="card-img-top" alt="imagen noticia">` : ""}
                 <div class="card-body">
                   <h5 class="card-title">${noticia.title}</h5>
                   <p class="card-text">${noticia.description || ''}</p>
@@ -78,7 +129,7 @@
               </div>
             </div>`;
         });
-        // Mostrar hora de actualización
+        // Hora de actualización
         const ahora = new Date().toLocaleTimeString();
         cont.innerHTML = `<p class="text-muted">Última actualización: ${ahora}</p>` + cont.innerHTML;
       } catch {
@@ -86,7 +137,10 @@
       }
     }
 
+    // Inicializar
     cargarClima();
+    cargarComparador();
+    cargarVideos();
     cargarAnomalias();
     setInterval(cargarAnomalias, 300000); // refrescar cada 5 minutos
   </script>
