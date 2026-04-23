@@ -153,8 +153,7 @@
       // Noticias vía rss2json
       try {
         const rssUrl = "https://caracol.com.co/rss/";
-        const apiUrl = `https://api.rss2json.com/v1/api.json?rss_url=${encodeURIComponent(rssUrl)}`;
-
+        const apiUrl = `https://api.rss2json.com/v1/api.json?rss_url=${encodeURIComponent(rssUrl)}&api_key=gelyisdioqkyv56lb5gzgxjh2f7xi5syrkfjpzoh`;
         const res = await fetch(apiUrl);
         const data = await res.json();
 
