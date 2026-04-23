@@ -122,6 +122,7 @@
       const tabla = document.getElementById("tabla-precios");
       try {
         const res = await fetch("data.json");
+        if (!res.ok) throw new Error("No se encontró data.json");
         const data = await res.json();
         tabla.innerHTML = "";
         data.forEach(item => {
@@ -136,6 +137,7 @@
         });
       } catch (e) {
         tabla.innerHTML = "<tr><td colspan='4' class='text-danger text-center'>Error cargando comparador</td></tr>";
+        console.error("Error cargarComparador:", e);
       }
     }
     cargarComparador();
@@ -148,6 +150,7 @@
       try {
         const url = `https://newsapi.org/v2/top-headlines?language=es&apiKey=ddd3a8123a8648a9a6a1bb13009c68ee`;
         const res = await fetch(url);
+        if (!res.ok) throw new Error("Error en NewsAPI");
         const data = await res.json();
 
         cont.innerHTML = "";
@@ -181,3 +184,4 @@
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
 </body>
 </html>
+
