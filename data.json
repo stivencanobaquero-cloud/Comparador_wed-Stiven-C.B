@@ -3,19 +3,19 @@
     "servicio": "Restaurante",
     "nombre": "Pollito con Papas (Centro)",
     "precio": "$18.000 combo pollo + papas",
-    "contacto": "Cra 14 #12-06"
+    "contacto": "Cra 14 #16-06"
   },
   {
     "servicio": "Restaurante",
     "nombre": "Celeste Restaurante",
     "precio": "$28.000 menú promedio",
-    "contacto": "Parque principal"
+    "contacto": "calle 14 # 32"
   },
   {
     "servicio": "Restaurante",
     "nombre": "Mr Wu Express",
     "precio": "$30.000 menú",
-    "contacto": "Ruta del Parque"
+    "contacto": "calle 13 # 23"
   },
   {
     "servicio": "Restaurante",
@@ -27,7 +27,7 @@
     "servicio": "Restaurante",
     "nombre": "Restaurante Geymi Carolina",
     "precio": "$10.000 almuerzo corriente",
-    "contacto": "Barrio Popular"
+    "contacto": "3177724401"
   },
   {
     "servicio": "Gym",
@@ -38,7 +38,7 @@
   {
     "servicio": "Gym",
     "nombre": "Olympia GYM",
-    "precio": "$100.000 mensual",
+    "precio": "$60.000 mensual",
     "contacto": "Cr 22 #10-24"
   },
   {
