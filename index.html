@@ -47,7 +47,7 @@
 
     <!-- Noticias -->
     <section class="my-5">
-      <h2 class="text-center text-danger mb-3"><i class="bi bi-exclamation-triangle"></i> Noticias en Colombia</h2>
+      <h2 class="text-center text-danger mb-3"><i class="bi bi-exclamation-triangle"></i> Noticias en Español</h2>
       <div id="anomalias" class="row g-3">
         <p class="text-muted">Cargando noticias...</p>
       </div>
@@ -140,31 +140,38 @@
     }
     cargarComparador();
 
-    // --- NOTICIAS EN VIVO (NewsAPI híbrido) ---
+    // --- NOTICIAS EN VIVO (NewsAPI con language=es y filtro Colombia) ---
     async function cargarAnomalias() {
       const cont = document.getElementById("anomalias");
       cont.innerHTML = "<p class='text-muted'>Cargando noticias...</p>";
 
       try {
-        // Primero intentamos titulares de Colombia
-        let url = `https://newsapi.org/v2/top-headlines?country=co&apiKey=ddd3a8123a8648a9a6a1bb13009c68ee`;
+        // Noticias generales en español
+        let url = `https://newsapi.org/v2/top-headlines?language=es&apiKey=ddd3a8123a8648a9a6a1bb13009c68ee`;
         let res = await fetch(url);
         let data = await res.json();
 
-        // Si no hay noticias, buscamos por palabra clave "Colombia"
-        if (!data.articles || data.articles.length === 0) {
-          url = `https://newsapi.org/v2/everything?q=Colombia&language=es&sortBy=publishedAt&apiKey=ddd3a8123a8648a9a6a1bb13009c68ee`;
-          res = await fetch(url);
-          data = await res.json();
+        // Filtrar primero las que mencionen Colombia
+        let articulos = [];
+        if (data.articles && data.articles.length > 0) {
+          articulos = data.articles.filter(a =>
+            a.title.toLowerCase().includes("colombia") ||
+            (a.description && a.description.toLowerCase().includes("colombia"))
+          );
+        }
+
+        // Si no hay artículos de Colombia, mostrar los generales en español
+        if (articulos.length === 0 && data.articles) {
+          articulos = data.articles;
         }
 
         cont.innerHTML = "";
-        if (!data.articles || data.articles.length === 0) {
+        if (!articulos || articulos.length === 0) {
           cont.innerHTML = "<p class='text-muted'>No se encontraron noticias</p>";
           return;
         }
 
-        data.articles.slice(0, 6).forEach(noticia => {
+        articulos.slice(0, 6).forEach(noticia => {
           cont.innerHTML += `
             <div class="col-md-4">
               <div class="card border-warning shadow h-100">
@@ -189,5 +196,4 @@
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
 </body>
 </html>
-
 
