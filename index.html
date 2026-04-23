@@ -47,35 +47,37 @@
 
     <!-- Anomalías -->
     <section class="my-5">
-      <h2 class="text-center text-danger mb-3"><i class="bi bi-exclamation-triangle"></i> Anomalías en Acacías</h2>
+      <h2 class="text-center text-danger mb-3"><i class="bi bi-exclamation-triangle"></i> Noticias en Colombia</h2>
       <div id="anomalias" class="row g-3">
-        <p>Cargando anomalías...</p>
+        <p>Cargando noticias...</p>
       </div>
     </section>
 
-    <!-- Galería de Videos -->
+    <!-- Videos -->
     <section class="my-5">
       <h2 class="text-center text-info mb-3"><i class="bi bi-film"></i> Videos</h2>
-      <div id="carouselVideos" class="carousel slide shadow" data-bs-ride="carousel" data-bs-interval="false">
-        <div class="carousel-inner">
-          <div class="carousel-item active">
-            <video class="d-block w-100" controls autoplay muted>
+      <div class="row g-4">
+        <div class="col-md-6">
+          <div class="card shadow">
+            <video class="card-img-top" controls autoplay muted loop>
               <source src="videos/video1.mp4" type="video/mp4">
               Tu navegador no soporta video.
             </video>
-          </div>
-          <div class="carousel-item">
-            <video class="d-block w-100" controls autoplay muted>
-              <source src="videos/video2.mp4" type="video/mp4">
-            </video>
+            <div class="card-body text-center">
+              <h5 class="card-title">Video 1</h5>
+            </div>
           </div>
         </div>
-        <button class="carousel-control-prev" type="button" data-bs-target="#carouselVideos" data-bs-slide="prev">
-          <span class="carousel-control-prev-icon"></span>
-        </button>
-        <button class="carousel-control-next" type="button" data-bs-target="#carouselVideos" data-bs-slide="next">
-          <span class="carousel-control-next-icon"></span>
-        </button>
+        <div class="col-md-6">
+          <div class="card shadow">
+            <video class="card-img-top" controls autoplay muted loop>
+              <source src="videos/video2.mp4" type="video/mp4">
+            </video>
+            <div class="card-body text-center">
+              <h5 class="card-title">Video 2</h5>
+            </div>
+          </div>
+        </div>
       </div>
     </section>
 
@@ -123,67 +125,33 @@
         });
       });
 
-    // Anomalías: alerta meteorológica + noticias RSS
+    // Noticias vía rss2json (toda Colombia)
     async function cargarAnomalias() {
       const cont = document.getElementById("anomalias");
       cont.innerHTML = "";
 
-      // Alerta meteorológica
-      try {
-        const lat = 3.986, lon = -73.765;
-        const url = `https://api.openweathermap.org/data/2.5/weather?lat=${lat}&lon=${lon}&units=metric&lang=es&appid=${OPENWEATHER_KEY}`;
-        const res = await fetch(url);
-        const clima = await res.json();
-        if (clima.weather[0].main.toLowerCase().includes("rain") || clima.weather[0].main.toLowerCase().includes("storm")) {
-          cont.innerHTML += `
-            <div class="col-md-4">
-              <div class="card border-danger shadow h-100">
-                <div class="card-body">
-                  <h5 class="card-title text-danger"><i class="bi bi-cloud-lightning"></i> Alerta Meteorológica</h5>
-                  <p class="card-text">Condiciones de tormenta/lluvia detectadas en Acacías.</p>
-                  <span class="badge bg-danger">Nivel: Alto</span>
-                </div>
-              </div>
-            </div>`;
-        }
-      } catch (e) {
-        console.log("Error clima:", e);
-      }
-
-      // Noticias vía rss2json
       try {
         const rssUrl = "https://caracol.com.co/rss/";
         const apiUrl = `https://api.rss2json.com/v1/api.json?rss_url=${encodeURIComponent(rssUrl)}&api_key=gelyisdioqkyv56lb5gzgxjh2f7xi5syrkfjpzoh`;
         const res = await fetch(apiUrl);
         const data = await res.json();
 
-        let count = 0;
-data.items.forEach((item) => {
-  if (count < 5) {
-    cont.innerHTML += `
-      <div class="col-md-4">
-        <div class="card border-warning shadow h-100">
-          <div class="card-body">
-            <h5 class="card-title text-warning">${item.title}</h5>
-            <p class="card-text">${item.description}</p>
-            <span class="badge bg-warning">Fuente: Caracol RSS</span>
-          </div>
-        </div>
-      </div>`;
-    count++;
-  }
-});
-
-        if (count === 0) {
-          cont.innerHTML = "<p class='text-muted'>No se encontraron noticias de Meta o Acacías</p>";
-        }
-
+        data.items.slice(0,6).forEach(item => {
+          cont.innerHTML += `
+            <div class="col-md-4">
+              <div class="card border-warning shadow h-100">
+                <div class="card-body">
+                  <h5 class="card-title text-warning"><i class="bi bi-newspaper"></i> ${item.title}</h5>
+                  <p class="card-text">${item.description}</p>
+                  <span class="badge bg-warning">Fuente: Caracol RSS</span>
+                </div>
+              </div>
+            </div>`;
+        });
       } catch (e) {
         cont.innerHTML = "<p class='text-muted'>No se pudo cargar noticias RSS</p>";
       }
     }
-
-    // Refrescar automáticamente cada minuto
     setInterval(cargarAnomalias, 60000);
     cargarAnomalias();
   </script>
@@ -191,11 +159,5 @@ data.items.forEach((item) => {
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
 </body>
 </html>
-<script>
-document.querySelectorAll('#carouselVideos video').forEach(video => {
-  video.addEventListener('click', e => {
-    e.stopPropagation(); // evita que el clic mueva el carrusel
-  });
-});
-</script>
+
 
