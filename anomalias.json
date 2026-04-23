@@ -9,11 +9,6 @@ async function cargarAnomalias() {
     const res = await fetch(url);
     const data = await res.json();
 
-    // Filtramos noticias que mencionen Meta, Acacías o Villavicencio
-    const items = data.items.filter(item =>
-      /Meta|Acacías|Villavicencio/i.test(item.title + item.description)
-    );
-
     // Mostramos máximo 5 noticias
     cont.innerHTML = "";
     items.slice(0, 5).forEach(item => {
