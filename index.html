@@ -142,15 +142,14 @@
     }
     cargarComparador();
 
-    // --- NOTICIAS EN VIVO (NewsAPI con language=es) ---
+    // --- NOTICIAS EN VIVO (NewsAPI con everything) ---
     async function cargarAnomalias() {
       const cont = document.getElementById("anomalias");
       cont.innerHTML = "<p class='text-muted'>Cargando noticias...</p>";
 
       try {
-        const url = `https://newsapi.org/v2/top-headlines?language=es&apiKey=ddd3a8123a8648a9a6a1bb13009c68ee`;
+        const url = `https://newsapi.org/v2/everything?q=Colombia&language=es&sortBy=publishedAt&apiKey=ddd3a8123a8648a9a6a1bb13009c68ee`;
         const res = await fetch(url);
-        if (!res.ok) throw new Error("Error en NewsAPI");
         const data = await res.json();
 
         cont.innerHTML = "";
