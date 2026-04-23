@@ -1,50 +1,77 @@
 [
   {
     "servicio": "Restaurante",
-    "nombre": "Celeste",
-    "precio": "$12.000 almuerzo",
-    "contacto": "3101112233"
-  },
-  {
-    "servicio": "Restaurante",
-    "nombre": "Pollito con Papas",
-    "precio": "$10.000 combo",
-    "contacto": "3102223344"
-  },
-  {
-    "servicio": "Restaurante",
-    "nombre": "Mr Wu",
-    "precio": "$15.000 menú oriental",
-    "contacto": "3103334455"
-  },
-  {
-    "servicio": "Restaurante",
-    "nombre": "La Sagrada Parrilla",
-    "precio": "$20.000 parrillada",
-    "contacto": "3104445566"
-  },
-  {
-    "servicio": "Restaurante",
     "nombre": "Restaurante Geymi Carolina",
     "precio": "$11.000 almuerzo casero",
     "contacto": "3177724402"
   },
   {
+    "servicio": "Restaurante",
+    "nombre": "Restaurante Celeste",
+    "precio": "Menú: Almuerzo corriente $13.000, Bandeja paisa $18.000, Sopa del día $10.000, Jugo natural $4.000",
+    "contacto": "3101112233"
+  },
+  {
+    "servicio": "Restaurante",
+    "nombre": "Pollito con Papas",
+    "precio": "$12.000 combo pollo + papas",
+    "contacto": "3102223344"
+  },
+  {
+    "servicio": "Restaurante",
+    "nombre": "Mr Wu Express",
+    "precio": "$18.000 menú oriental",
+    "contacto": "3103334455"
+  },
+  {
+    "servicio": "Restaurante",
+    "nombre": "La Sagrada Parrilla",
+    "precio": "$22.000 parrillada",
+    "contacto": "3104445566"
+  },
+
+  {
     "servicio": "Gimnasio",
     "nombre": "Power Gym",
-    "precio": "$70.000 mensual",
+    "precio": "$75.000 mensual",
     "contacto": "3101234567"
+  },
+  {
+    "servicio": "Gimnasio",
+    "nombre": "BullsFit",
+    "precio": "$85.000 mensual",
+    "contacto": "3001234567"
+  },
+  {
+    "servicio": "Gimnasio",
+    "nombre": "Strong Fitness",
+    "precio": "$90.000 mensual",
+    "contacto": "3107654321"
+  },
+
+  {
+    "servicio": "Fruber",
+    "nombre": "Plaza de Mercado Acacías",
+    "precio": "Tomate $3.800/kg, Plátano $2.200/kg, Cebolla $2.500/kg",
+    "contacto": "Cra 15 #12-34"
   },
   {
     "servicio": "Fruber",
     "nombre": "Frutas del Llano",
-    "precio": "Banano $3.000/kg, Papaya $4.000/kg",
+    "precio": "Papaya $4.200/kg, Sandía $3.500/kg",
     "contacto": "3109876543"
   },
+
   {
-    "servicio": "Cine",
-    "nombre": "Cinema Acacías",
-    "precio": "$8.000 entrada general",
-    "contacto": "3105556677"
+    "servicio": "Hotel",
+    "nombre": "Hotel Acacías Real",
+    "precio": "$95.000 noche",
+    "contacto": "3108883344"
+  },
+  {
+    "servicio": "Hotel",
+    "nombre": "Hotel Wayra Club",
+    "precio": "$120.000 noche",
+    "contacto": "3204567890"
   }
 ]

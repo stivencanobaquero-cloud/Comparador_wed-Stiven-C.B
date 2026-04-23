@@ -140,15 +140,23 @@
     }
     cargarComparador();
 
-    // --- NOTICIAS EN VIVO (NewsAPI) ---
+    // --- NOTICIAS EN VIVO (NewsAPI híbrido) ---
     async function cargarAnomalias() {
       const cont = document.getElementById("anomalias");
       cont.innerHTML = "<p class='text-muted'>Cargando noticias...</p>";
 
       try {
-        const url = `https://newsapi.org/v2/top-headlines?country=co&apiKey=ddd3a8123a8648a9a6a1bb13009c68ee`;
-        const res = await fetch(url);
-        const data = await res.json();
+        // Primero intentamos titulares de Colombia
+        let url = `https://newsapi.org/v2/top-headlines?country=co&apiKey=ddd3a8123a8648a9a6a1bb13009c68ee`;
+        let res = await fetch(url);
+        let data = await res.json();
+
+        // Si no hay noticias, buscamos por palabra clave "Colombia"
+        if (!data.articles || data.articles.length === 0) {
+          url = `https://newsapi.org/v2/everything?q=Colombia&language=es&sortBy=publishedAt&apiKey=ddd3a8123a8648a9a6a1bb13009c68ee`;
+          res = await fetch(url);
+          data = await res.json();
+        }
 
         cont.innerHTML = "";
         if (!data.articles || data.articles.length === 0) {
