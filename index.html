@@ -7,14 +7,6 @@
   <!-- Bootstrap y Bootstrap Icons -->
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
   <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons/font/bootstrap-icons.css" rel="stylesheet">
-  <style>
-    /* Pequeños ajustes visuales */
-    body { padding-bottom: 40px; }
-    .card-img-top { object-fit: cover; height: 320px; background: #000; }
-    @media (max-width: 576px) {
-      .card-img-top { height: 200px; }
-    }
-  </style>
 </head>
 <body class="bg-light">
 
@@ -38,24 +30,22 @@
     <!-- Comparador -->
     <section class="my-5">
       <h2 class="text-center text-success mb-3"><i class="bi bi-cash-stack"></i> Comparador de Precios</h2>
-      <div class="table-responsive shadow">
-        <table class="table table-striped table-hover mb-0">
-          <thead class="table-dark">
-            <tr>
-              <th>Servicio</th>
-              <th>Nombre</th>
-              <th>Precio</th>
-              <th>Contacto</th>
-            </tr>
-          </thead>
-          <tbody id="tabla-precios">
-            <tr><td colspan="4" class="text-center text-muted">Cargando comparador...</td></tr>
-          </tbody>
-        </table>
-      </div>
+      <table class="table table-striped table-hover shadow">
+        <thead class="table-dark">
+          <tr>
+            <th>Servicio</th>
+            <th>Nombre</th>
+            <th>Precio</th>
+            <th>Contacto</th>
+          </tr>
+        </thead>
+        <tbody id="tabla-precios">
+          <tr><td colspan="4" class="text-center text-muted">Cargando comparador...</td></tr>
+        </tbody>
+      </table>
     </section>
 
-    <!-- Anomalías / Noticias -->
+    <!-- Noticias -->
     <section class="my-5">
       <h2 class="text-center text-danger mb-3"><i class="bi bi-exclamation-triangle"></i> Noticias en Colombia</h2>
       <div id="anomalias" class="row g-3">
@@ -69,8 +59,8 @@
       <div class="row g-4">
         <div class="col-md-6">
           <div class="card shadow">
-            <video class="card-img-top" controls autoplay muted loop playsinline>
-              <source src="./videos/video1.mp4" type="video/mp4">
+            <video class="card-img-top" controls autoplay muted loop>
+              <source src="videos/video1.mp4" type="video/mp4">
               Tu navegador no soporta video.
             </video>
             <div class="card-body text-center">
@@ -80,8 +70,8 @@
         </div>
         <div class="col-md-6">
           <div class="card shadow">
-            <video class="card-img-top" controls autoplay muted loop playsinline>
-              <source src="./videos/video2.mp4" type="video/mp4">
+            <video class="card-img-top" controls autoplay muted loop>
+              <source src="videos/video2.mp4" type="video/mp4">
               Tu navegador no soporta video.
             </video>
             <div class="card-body text-center">
@@ -95,17 +85,15 @@
   </div>
 
   <!-- Scripts -->
-  <script src="./weather-config.js"></script>
+  <script src="weather-config.js"></script>
   <script>
     // --- CLIMA ---
     async function cargarClima() {
       const cont = document.getElementById("clima");
       cont.innerHTML = "<p class='text-muted'>Cargando clima...</p>";
 
-      // Verificar que la clave exista
       if (typeof OPENWEATHER_KEY === "undefined" || !OPENWEATHER_KEY) {
-        cont.innerHTML = "<p class='text-danger'>Clave de OpenWeather no encontrada. Revisa weather-config.js</p>";
-        console.error("OPENWEATHER_KEY no definida");
+        cont.innerHTML = "<p class='text-danger'>Clave de OpenWeather no encontrada</p>";
         return;
       }
 
@@ -115,130 +103,79 @@
 
       try {
         const res = await fetch(url);
-        if (!res.ok) throw new Error("Error en respuesta OpenWeather: " + res.status);
         const data = await res.json();
-
         cont.innerHTML = `
-          <h4 class="text-capitalize">${data.weather?.[0]?.description || 'Sin descripción'}</h4>
-          <p>🌡️ Temperatura: <b>${data.main?.temp ?? '—'} °C</b></p>
-          <p>💧 Humedad: <b>${data.main?.humidity ?? '—'}%</b></p>
-          <p>🤒 Sensación térmica: <b>${data.main?.feels_like ?? '—'} °C</b></p>
-          <p>💨 Viento: <b>${data.wind?.speed ?? '—'} m/s</b></p>
+          <h4 class="text-capitalize">${data.weather[0].description}</h4>
+          <p>🌡️ Temperatura: <b>${data.main.temp} °C</b></p>
+          <p>💧 Humedad: <b>${data.main.humidity}%</b></p>
+          <p>🤒 Sensación térmica: <b>${data.main.feels_like} °C</b></p>
+          <p>💨 Viento: <b>${data.wind.speed} m/s</b></p>
         `;
       } catch (error) {
         cont.innerHTML = "<p class='text-danger'>Error cargando clima</p>";
-        console.error("Error cargarClima:", error);
       }
     }
-
-    // Ejecutar carga de clima
     cargarClima();
 
-    // --- COMPARADOR (data.json) ---
+    // --- COMPARADOR ---
     async function cargarComparador() {
       const tabla = document.getElementById("tabla-precios");
-      tabla.innerHTML = "<tr><td colspan='4' class='text-center text-muted'>Cargando comparador...</td></tr>";
-
       try {
-        const res = await fetch("./data.json");
-        if (!res.ok) throw new Error("data.json no encontrado o error: " + res.status);
+        const res = await fetch("data.json");
         const data = await res.json();
-
-        if (!Array.isArray(data) || data.length === 0) {
-          tabla.innerHTML = "<tr><td colspan='4' class='text-center text-muted'>No hay datos en data.json</td></tr>";
-          return;
-        }
-
         tabla.innerHTML = "";
         data.forEach(item => {
           tabla.innerHTML += `
             <tr>
-              <td>${item.servicio ?? ''}</td>
-              <td>${item.nombre ?? ''}</td>
-              <td class="text-success fw-bold">${item.precio ?? ''}</td>
-              <td>${item.contacto ?? ''}</td>
+              <td>${item.servicio}</td>
+              <td>${item.nombre}</td>
+              <td class="text-success fw-bold">${item.precio}</td>
+              <td>${item.contacto}</td>
             </tr>
           `;
         });
       } catch (e) {
-        tabla.innerHTML = "<tr><td colspan='4' class='text-center text-danger'>Error cargando comparador</td></tr>";
-        console.error("Error cargarComparador:", e);
+        tabla.innerHTML = "<tr><td colspan='4' class='text-danger text-center'>Error cargando comparador</td></tr>";
       }
     }
-
     cargarComparador();
 
-    // --- ANOMALIAS / NOTICIAS (AllOrigins + parseo XML) ---
+    // --- NOTICIAS EN VIVO (NewsAPI) ---
     async function cargarAnomalias() {
       const cont = document.getElementById("anomalias");
       cont.innerHTML = "<p class='text-muted'>Cargando noticias...</p>";
 
       try {
-        const rssUrl = "https://caracol.com.co/rss/";
-        const apiUrl = `https://api.allorigins.win/get?url=${encodeURIComponent(rssUrl)}`;
-        const res = await fetch(apiUrl);
-        if (!res.ok) throw new Error("AllOrigins error: " + res.status);
+        const url = `https://newsapi.org/v2/top-headlines?country=co&apiKey=ddd3a8123a8648a9a6a1bb13009c68ee`;
+        const res = await fetch(url);
         const data = await res.json();
 
-        // Parsear el XML que viene dentro de data.contents
-        const parser = new DOMParser();
-        const xml = parser.parseFromString(data.contents, "text/xml");
-        const itemsNodeList = xml.querySelectorAll("item");
-
-        // Convertir NodeList a array para mayor seguridad
-        const items = Array.from(itemsNodeList || []);
-
         cont.innerHTML = "";
-        if (items.length === 0) {
-          cont.innerHTML = "<p class='text-muted'>No se encontraron noticias en el feed</p>";
+        if (!data.articles || data.articles.length === 0) {
+          cont.innerHTML = "<p class='text-muted'>No se encontraron noticias</p>";
           return;
         }
 
-        // Mostrar hasta 6 noticias
-        items.slice(0, 6).forEach(node => {
-          const tituloNode = node.querySelector("title");
-          const descNode = node.querySelector("description");
-          const linkNode = node.querySelector("link");
-
-          const titulo = tituloNode ? tituloNode.textContent.trim() : "Sin título";
-          // description puede contener HTML; limitar longitud para la tarjeta
-          let desc = descNode ? descNode.textContent.trim() : "";
-          if (desc.length > 300) desc = desc.slice(0, 300) + "…";
-
-          const link = linkNode ? linkNode.textContent.trim() : "#";
-
+        data.articles.slice(0, 6).forEach(noticia => {
           cont.innerHTML += `
             <div class="col-md-4">
               <div class="card border-warning shadow h-100">
                 <div class="card-body d-flex flex-column">
-                  <h5 class="card-title text-warning"><i class="bi bi-newspaper"></i> ${titulo}</h5>
-                  <p class="card-text flex-grow-1">${desc}</p>
-                  <div class="mt-2">
-                    <a href="${link}" target="_blank" rel="noopener" class="btn btn-sm btn-outline-warning">Leer noticia</a>
-                    <span class="badge bg-warning ms-2">Fuente: Caracol</span>
-                  </div>
+                  <h5 class="card-title text-warning"><i class="bi bi-newspaper"></i> ${noticia.title}</h5>
+                  <p class="card-text flex-grow-1">${noticia.description || ""}</p>
+                  <a href="${noticia.url}" target="_blank" class="btn btn-sm btn-outline-warning mt-auto">Leer más</a>
                 </div>
               </div>
             </div>
           `;
         });
-
       } catch (e) {
-        cont.innerHTML = "<p class='text-muted'>No se pudo cargar noticias RSS</p>";
+        cont.innerHTML = "<p class='text-muted'>No se pudo cargar noticias</p>";
         console.error("Error cargarAnomalias:", e);
       }
     }
-
-    // Ejecutar al cargar la página y refrescar cada minuto
     cargarAnomalias();
     setInterval(cargarAnomalias, 60000);
-
-    // --- Seguridad: evitar que clic en video avance carrusel (si en el futuro usas carrusel) ---
-    document.addEventListener("click", function (e) {
-      if (e.target && e.target.tagName === "VIDEO") {
-        e.stopPropagation();
-      }
-    });
   </script>
 
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
