@@ -56,10 +56,10 @@
     <!-- Galería de Videos -->
     <section class="my-5">
       <h2 class="text-center text-info mb-3"><i class="bi bi-film"></i> Videos</h2>
-      <div id="carouselVideos" class="carousel slide shadow" data-bs-ride="carousel">
+      <div id="carouselVideos" class="carousel slide shadow" data-bs-ride="carousel" data-bs-interval="false">
         <div class="carousel-inner">
           <div class="carousel-item active">
-            <video class="d-block w-100" controls>
+            <video class="d-block w-100" controls autoplay>
               <source src="videos/video1.mp4" type="video/mp4">
               Tu navegador no soporta video.
             </video>
@@ -162,7 +162,7 @@
           const titulo = item.title;
           const desc = item.description;
 
-          if ((titulo.includes("Meta") || titulo.includes("Acacías") || desc.includes("Meta") || desc.includes("Villavicencio")) && count < 5) {
+          if ((titulo.includes("Meta") || titulo.includes("bogota") || desc.includes("colombia") || desc.includes("Villavicencio")) && count < 5) {
             cont.innerHTML += `
               <div class="col-md-4">
                 <div class="card border-warning shadow h-100">
