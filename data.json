@@ -1,0 +1,62 @@
+[
+  {
+    "servicio": "Restaurante",
+    "nombre": "Pollito con Papas (Centro)",
+    "precio": "$18.000 combo pollo + papas",
+    "contacto": "Cra 14 #12-06"
+  },
+  {
+    "servicio": "Restaurante",
+    "nombre": "Celeste Restaurante",
+    "precio": "$28.000 menú promedio",
+    "contacto": "Parque principal"
+  },
+  {
+    "servicio": "Restaurante",
+    "nombre": "Mr Wu Express",
+    "precio": "$30.000 menú",
+    "contacto": "Ruta del Parque"
+  },
+  {
+    "servicio": "Restaurante",
+    "nombre": "La Sagrada Parrilla",
+    "precio": "$35.000 parrillada",
+    "contacto": "Cra 23 #12-8"
+  },
+  {
+    "servicio": "Restaurante",
+    "nombre": "Restaurante Geymi Carolina",
+    "precio": "$10.000 almuerzo corriente",
+    "contacto": "Barrio Popular"
+  },
+  {
+    "servicio": "Gym",
+    "nombre": "BullsFit.GYM",
+    "precio": "$90.000 mensual",
+    "contacto": "Cra 14 #19-31"
+  },
+  {
+    "servicio": "Gym",
+    "nombre": "Olympia GYM",
+    "precio": "$100.000 mensual",
+    "contacto": "Cr 22 #10-24"
+  },
+  {
+    "servicio": "Gym",
+    "nombre": "Ventura GYM",
+    "precio": "$95.000 mensual",
+    "contacto": "Cra 23 #14-19"
+  },
+  {
+    "servicio": "Fruber",
+    "nombre": "Plaza de Mercado Acacías",
+    "precio": "Tomate $3.800/kg, Plátano $2.200/kg, Cebolla $2.500/kg",
+    "contacto": "Cra 15 #12-34"
+  },
+  {
+    "servicio": "Cine",
+    "nombre": "Cine Acacías",
+    "precio": "$12.000 entrada general",
+    "contacto": "www.cineacacias.com"
+  }
+]
