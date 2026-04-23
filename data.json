@@ -64,7 +64,6 @@
     ],
     "contacto": "3104445566"
   },
-
   {
     "servicio": "Gimnasio",
     "nombre": "Goods empire",
@@ -89,7 +88,6 @@
     ],
     "contacto": "3107654321"
   },
-
   {
     "servicio": "Fruber",
     "nombre": "D1",
@@ -114,5 +112,28 @@
     ],
     "contacto": "cl 12 #17 - 30"
   },
-
   {
+    "servicio": "Domicilios",
+    "nombre": "Domicilios dani",
+    "menu": [
+      { "plato": "Servicio mínimo", "precio": "$6.000" }
+    ],
+    "contacto": "3104547213 o 3203356962"
+  },
+  {
+    "servicio": "Hotel",
+    "nombre": "Hotel Acacías Real",
+    "menu": [
+      { "plato": "Noche", "precio": "$95.000" }
+    ],
+    "contacto": "3108883344"
+  },
+  {
+    "servicio": "Hotel",
+    "nombre": "Hotel Wayra Club",
+    "menu": [
+      { "plato": "Noche", "precio": "$120.000" }
+    ],
+    "contacto": "3204567890"
+  }
+]
