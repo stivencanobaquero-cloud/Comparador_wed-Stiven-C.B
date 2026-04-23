@@ -2,185 +2,95 @@
 <html lang="es">
 <head>
   <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Comparador Acacías</title>
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  <!-- Bootstrap y Bootstrap Icons -->
+  <!-- Bootstrap -->
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
-  <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons/font/bootstrap-icons.css" rel="stylesheet">
+  <!-- Google Fonts -->
+  <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap" rel="stylesheet">
+  <!-- Estilos personalizados -->
+  <link rel="stylesheet" href="styles.css">
 </head>
-<body class="bg-light">
-
+<body>
   <!-- Navbar -->
-  <nav class="navbar navbar-expand-lg navbar-dark bg-primary fixed-top shadow">
+  <nav class="navbar navbar-expand-lg navbar-dark">
     <div class="container-fluid">
-      <a class="navbar-brand fw-bold" href="#">🌐 Comparador Acacías</a>
+      <a class="navbar-brand fw-bold" href="#">Comparador Acacías</a>
     </div>
   </nav>
 
-  <main class="container mt-5 pt-4">
+  <!-- Clima -->
+  <section id="clima" class="container my-4">
+    <h2 class="mb-3">Clima en Acacías</h2>
+    <div id="weather" class="alert alert-info">Cargando clima...</div>
+  </section>
 
-    <!-- Clima -->
-    <section class="my-5">
-      <h2 class="text-center text-primary mb-3"><i class="bi bi-cloud-sun"></i> Clima en Acacías</h2>
-      <div id="clima" class="card p-4 shadow text-center">
-        <p>Cargando clima...</p>
-      </div>
-    </section>
+  <!-- Comparador -->
+  <section id="comparador" class="container my-4">
+    <h2 class="mb-3">Comparador de Precios</h2>
+    <div id="comparador-precios" class="row"></div>
+  </section>
 
-    <!-- Comparador -->
-    <section class="my-5">
-      <h2 class="text-center text-success mb-3"><i class="bi bi-cash-stack"></i> Comparador de Precios</h2>
-      <table class="table table-striped table-hover shadow">
-        <thead class="table-dark">
-          <tr>
-            <th>Servicio</th>
-            <th>Nombre</th>
-            <th>Precio</th>
-            <th>Contacto</th>
-          </tr>
-        </thead>
-        <tbody id="tabla-precios">
-          <tr><td colspan="4" class="text-center text-muted">Cargando comparador...</td></tr>
-        </tbody>
-      </table>
-    </section>
+  <!-- Videos -->
+  <section id="videos" class="container my-4">
+    <h2 class="mb-3">Videos</h2>
+    <div id="video-gallery" class="row"></div>
+  </section>
 
-    <!-- Noticias -->
-    <section class="my-5">
-      <h2 class="text-center text-danger mb-3"><i class="bi bi-newspaper"></i> Noticias en Español</h2>
-      <div id="anomalias" class="row g-3">
-        <p class="text-muted">Cargando noticias...</p>
-      </div>
-    </section>
-
-    <!-- Videos -->
-    <section class="my-5">
-      <h2 class="text-center text-info mb-3"><i class="bi bi-film"></i> Videos</h2>
-      <div class="row g-4">
-        <div class="col-md-6">
-          <div class="card shadow">
-            <video class="card-img-top" controls autoplay muted loop>
-              <source src="videos/video1.mp4" type="video/mp4">
-              Tu navegador no soporta video.
-            </video>
-            <div class="card-body text-center">
-              <h5 class="card-title">Video 1</h5>
-            </div>
-          </div>
-        </div>
-        <div class="col-md-6">
-          <div class="card shadow">
-            <video class="card-img-top" controls autoplay muted loop>
-              <source src="videos/video2.mp4" type="video/mp4">
-              Tu navegador no soporta video.
-            </video>
-            <div class="card-body text-center">
-              <h5 class="card-title">Video 2</h5>
-            </div>
-          </div>
-        </div>
-      </div>
-    </section>
-
-  </main>
+  <!-- Noticias -->
+  <section id="anomalias" class="container my-4">
+    <h2 class="mb-3">Noticias en Vivo</h2>
+    <div id="anomalias-container" class="row"></div>
+  </section>
 
   <!-- Scripts -->
-  <script src="weather-config.js"></script>
+  <script src="config.js"></script>
   <script>
-    // --- CLIMA ---
+    // Clima
     async function cargarClima() {
-      const cont = document.getElementById("clima");
-      cont.innerHTML = "<p class='text-muted'>Cargando clima...</p>";
-
-      if (typeof OPENWEATHER_KEY === "undefined" || !OPENWEATHER_KEY) {
-        cont.innerHTML = "<p class='text-danger'>Clave de OpenWeather no encontrada</p>";
-        return;
-      }
-
-      const lat = 3.986;   // Coordenadas de Acacías
-      const lon = -73.765;
-      const url = `https://api.openweathermap.org/data/2.5/weather?lat=${lat}&lon=${lon}&units=metric&lang=es&appid=${OPENWEATHER_KEY}`;
-
       try {
-        const res = await fetch(url);
-        const data = await res.json();
-        cont.innerHTML = `
-          <h4 class="text-capitalize">${data.weather[0].description}</h4>
-          <p>🌡️ Temperatura: <b>${data.main.temp} °C</b></p>
-          <p>💧 Humedad: <b>${data.main.humidity}%</b></p>
-          <p>🤒 Sensación térmica: <b>${data.main.feels_like} °C</b></p>
-          <p>💨 Viento: <b>${data.wind.speed} m/s</b></p>
-        `;
-      } catch (error) {
-        cont.innerHTML = "<p class='text-danger'>Error cargando clima</p>";
+        const resp = await fetch(`https://api.openweathermap.org/data/2.5/weather?q=Acacias,CO&appid=${config.OPENWEATHER_KEY}&units=metric&lang=es`);
+        const data = await resp.json();
+        document.getElementById("weather").innerHTML =
+          `Temperatura: ${data.main.temp}°C, ${data.weather[0].description}`;
+      } catch {
+        document.getElementById("weather").innerHTML = "Error cargando clima";
       }
     }
-    cargarClima();
 
-    // --- COMPARADOR ---
-    async function cargarComparador() {
-      const tabla = document.getElementById("tabla-precios");
-      try {
-        const res = await fetch("data.json");
-        if (!res.ok) throw new Error("No se encontró data.json");
-        const data = await res.json();
-        tabla.innerHTML = "";
-        data.forEach(item => {
-          tabla.innerHTML += `
-            <tr>
-              <td>${item.servicio}</td>
-              <td>${item.nombre}</td>
-              <td class="text-success fw-bold">${item.precio}</td>
-              <td>${item.contacto}</td>
-            </tr>
-          `;
-        });
-      } catch (e) {
-        tabla.innerHTML = "<tr><td colspan='4' class='text-danger text-center'>Error cargando comparador</td></tr>";
-        console.error("Error cargarComparador:", e);
-      }
-    }
-    cargarComparador();
-
-    // --- NOTICIAS DESDE BACKEND ---
+    // Noticias
     async function cargarAnomalias() {
-      const cont = document.getElementById("anomalias");
-      cont.innerHTML = "<p class='text-muted'>Cargando noticias...</p>";
-
       try {
-        // URL de tu backend en Render
-        const res = await fetch("https://mi-comparador-wed.onrender.com/api/noticias");
-        const data = await res.json();
-
+        const resp = await fetch("https://mi-comparador-wed.onrender.com/api/noticias");
+        const data = await resp.json();
+        const cont = document.getElementById("anomalias-container");
         cont.innerHTML = "";
-        if (!data.articles || data.articles.length === 0) {
-          cont.innerHTML = "<p class='text-muted'>No se encontraron noticias</p>";
-          return;
-        }
-
-        data.articles.slice(0, 6).forEach(noticia => {
+        data.articles.forEach(noticia => {
           cont.innerHTML += `
-            <div class="col-md-4">
-              <div class="card border-warning shadow h-100">
-                <div class="card-body d-flex flex-column">
-                  <h5 class="card-title text-warning"><i class="bi bi-newspaper"></i> ${noticia.title}</h5>
-                  <p class="card-text flex-grow-1">${noticia.description || ""}</p>
-                  <a href="${noticia.url}" target="_blank" class="btn btn-sm btn-outline-warning mt-auto">Leer más</a>
+            <div class="col-md-4 mb-3">
+              <div class="card h-100">
+                <img src="${noticia.urlToImage || ''}" class="card-img-top" alt="imagen noticia">
+                <div class="card-body">
+                  <h5 class="card-title">${noticia.title}</h5>
+                  <p class="card-text">${noticia.description || ''}</p>
+                  <a href="${noticia.url}" target="_blank" class="btn btn-outline-warning">Leer más</a>
                 </div>
               </div>
-            </div>
-          `;
+            </div>`;
         });
-      } catch (e) {
-        cont.innerHTML = "<p class='text-muted'>No se pudo cargar noticias</p>";
-        console.error("Error cargarAnomalias:", e);
+        // Mostrar hora de actualización
+        const ahora = new Date().toLocaleTimeString();
+        cont.innerHTML = `<p class="text-muted">Última actualización: ${ahora}</p>` + cont.innerHTML;
+      } catch {
+        document.getElementById("anomalias-container").innerHTML = "Error cargando noticias";
       }
     }
-    cargarAnomalias();
-    setInterval(cargarAnomalias, 60000);
-  </script>
 
-  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    cargarClima();
+    cargarAnomalias();
+    setInterval(cargarAnomalias, 300000); // refrescar cada 5 minutos
+  </script>
 </body>
 </html>
+
 
