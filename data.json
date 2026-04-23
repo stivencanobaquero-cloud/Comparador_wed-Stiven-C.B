@@ -7,59 +7,89 @@
   },
   {
     "servicio": "Restaurante",
-    "nombre": "Restaurante Celeste",
-    "precio": "Menú: Almuerzo corriente $13.000, Bandeja paisa $18.000, Sopa del día $10.000, Jugo natural $4.000",
-    "contacto": "3101112233"
+    "nombre": "Arroz paisa",
+    "precio": "$17.900 combo express y chulecombo 22.900",
+    "contacto": "3177724402"
   },
   {
     "servicio": "Restaurante",
-    "nombre": "Pollito con Papas",
-    "precio": "$12.000 combo pollo + papas",
+    "nombre": "Restaurante Celeste",
+    "menu": [
+      { "plato": "Desayuno tradicional o campesino", "precio": "$17.000" },
+      { "plato": "Picada", "precio": "$26.000" },
+      { "plato": "BBQ", "precio": "$27.000" },
+      { "plato": "Bebida cítrica", "precio": "$9.000" }
+    ],
+    "contacto": "3213290619"
+  },
+  {
+    "servicio": "Restaurante",
+    "nombre": "Pollitos con papa centro",
+    "precio": "$40.000 pollo completo, 1/4 $11.000, 1/2 21.000",
+    "contacto": "calle 16 # carrera 16"
+  },
+  {
+    "servicio": "Restaurante",
+    "nombre": "Pollito con Papas la 23",
+    "precio": "$40.000 pollo completo, 1/4 $11.000, 1/2 21.000",
     "contacto": "3102223344"
   },
   {
     "servicio": "Restaurante",
-    "nombre": "Mr Wu Express",
-    "precio": "$16.500 personal más barato",
-    "contacto": "3103334455"
+    "nombre": "Mr Wu",
+    "precio": "$16.500 personal",
+    "contacto": "3115482279"
   },
   {
     "servicio": "Restaurante",
     "nombre": "La Sagrada Parrilla",
-    "precio": "$22.000 parrillada",
+    "precio": "$55.000 picada x2, sancocho de gallina $18.000",
     "contacto": "3104445566"
   },
 
   {
     "servicio": "Gimnasio",
-    "nombre": "Power Gym",
-    "precio": "$75.000 mensual",
+    "nombre": "Goods empire",
+    "precio": "$70.000 mensual",
     "contacto": "3101234567"
   },
   {
     "servicio": "Gimnasio",
-    "nombre": "BullsFit",
-    "precio": "$85.000 mensual",
+    "nombre": "Distrito 23",
+    "precio": "$70.000 mensual",
     "contacto": "3001234567"
   },
   {
     "servicio": "Gimnasio",
-    "nombre": "Strong Fitness",
-    "precio": "$90.000 mensual",
+    "nombre": "Xtreme",
+    "precio": "$70.000 mensual",
     "contacto": "3107654321"
   },
 
   {
     "servicio": "Fruber",
-    "nombre": "Plaza de Mercado Acacías",
-    "precio": "Tomate $3.800/kg, Plátano $2.200/kg, Cebolla $2.500/kg",
-    "contacto": "Cra 15 #12-34"
+    "nombre": "D1",
+    "precio": "lugar económico para mercar",
+    "contacto": "Cra 16 #calle 15"
   },
   {
     "servicio": "Fruber",
-    "nombre": "Frutas del Llano",
-    "precio": "Papaya $4.200/kg, Sandía $3.500/kg",
-    "contacto": "3109876543"
+    "nombre": "Ara",
+    "precio": "lugar económico para mercar",
+    "contacto": "calle 14 #19-52"
+  },
+  {
+    "servicio": "Fruber",
+    "nombre": "Merca Plaza",
+    "precio": "lugar económico para mercar",
+    "contacto": "cl 12 #17 - 30"
+  },
+
+  {
+    "servicio": "Domicilios",
+    "nombre": "Domicilios dani",
+    "precio": "6.000 la mínima",
+    "contacto": "3104547213 o 3203356962"
   },
 
   {
@@ -75,3 +105,4 @@
     "contacto": "3204567890"
   }
 ]
+
