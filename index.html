@@ -47,7 +47,7 @@
 
     <!-- Noticias -->
     <section class="my-5">
-      <h2 class="text-center text-danger mb-3"><i class="bi bi-exclamation-triangle"></i> Noticias en Español</h2>
+      <h2 class="text-center text-danger mb-3"><i class="bi bi-newspaper"></i> Noticias en Español</h2>
       <div id="anomalias" class="row g-3">
         <p class="text-muted">Cargando noticias...</p>
       </div>
@@ -142,14 +142,14 @@
     }
     cargarComparador();
 
-    // --- NOTICIAS EN VIVO (NewsAPI con everything) ---
+    // --- NOTICIAS DESDE BACKEND ---
     async function cargarAnomalias() {
       const cont = document.getElementById("anomalias");
       cont.innerHTML = "<p class='text-muted'>Cargando noticias...</p>";
 
       try {
-        const url = `https://newsapi.org/v2/everything?q=Colombia&language=es&sortBy=publishedAt&apiKey=ddd3a8123a8648a9a6a1bb13009c68ee`;
-        const res = await fetch(url);
+        // URL de tu backend en Render
+        const res = await fetch("https://mi-comparador-wed.onrender.com/api/noticias");
         const data = await res.json();
 
         cont.innerHTML = "";
