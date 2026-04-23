@@ -2,13 +2,18 @@
   {
     "servicio": "Restaurante",
     "nombre": "Restaurante Geymi Carolina",
-    "precio": "$10.000 almuerzo casero",
+    "menu": [
+      { "plato": "Almuerzo casero", "precio": "$10.000" }
+    ],
     "contacto": "3177724402"
   },
   {
     "servicio": "Restaurante",
     "nombre": "Arroz paisa",
-    "precio": "$17.900 combo express y chulecombo 22.900",
+    "menu": [
+      { "plato": "Combo express", "precio": "$17.900" },
+      { "plato": "Chulecombo", "precio": "$22.900" }
+    ],
     "contacto": "carrera 23 calle 15"
   },
   {
@@ -25,84 +30,89 @@
   {
     "servicio": "Restaurante",
     "nombre": "Pollitos con papa centro",
-    "precio": "$40.000 pollo completo, 1/4 $11.000, 1/2 21.000",
+    "menu": [
+      { "plato": "Pollo completo", "precio": "$40.000" },
+      { "plato": "1/4 de pollo", "precio": "$11.000" },
+      { "plato": "1/2 pollo", "precio": "$21.000" }
+    ],
     "contacto": "calle 16 # carrera 16"
   },
   {
     "servicio": "Restaurante",
     "nombre": "Pollito con Papas la 23",
-    "precio": "$40.000 pollo completo, 1/4 $11.000, 1/2 21.000",
+    "menu": [
+      { "plato": "Pollo completo", "precio": "$40.000" },
+      { "plato": "1/4 de pollo", "precio": "$11.000" },
+      { "plato": "1/2 pollo", "precio": "$21.000" }
+    ],
     "contacto": "3102223344"
   },
   {
     "servicio": "Restaurante",
     "nombre": "Mr Wu",
-    "precio": "$16.500 personal",
+    "menu": [
+      { "plato": "Personal", "precio": "$16.500" }
+    ],
     "contacto": "3115482279"
   },
   {
     "servicio": "Restaurante",
     "nombre": "La Sagrada Parrilla",
-    "precio": "$55.000 picada x2, sancocho de gallina $18.000",
+    "menu": [
+      { "plato": "Picada x2", "precio": "$55.000" },
+      { "plato": "Sancocho de gallina", "precio": "$18.000" }
+    ],
     "contacto": "3104445566"
   },
 
   {
     "servicio": "Gimnasio",
     "nombre": "Goods empire",
-    "precio": "$70.000 mensual",
+    "menu": [
+      { "plato": "Mensualidad", "precio": "$70.000" }
+    ],
     "contacto": "3101234567"
   },
   {
     "servicio": "Gimnasio",
     "nombre": "Distrito 23",
-    "precio": "$70.000 mensual",
+    "menu": [
+      { "plato": "Mensualidad", "precio": "$70.000" }
+    ],
     "contacto": "3001234567"
   },
   {
     "servicio": "Gimnasio",
     "nombre": "Xtreme",
-    "precio": "$70.000 mensual",
+    "menu": [
+      { "plato": "Mensualidad", "precio": "$70.000" }
+    ],
     "contacto": "3107654321"
   },
 
   {
     "servicio": "Fruber",
     "nombre": "D1",
-    "precio": "lugar económico para mercar",
+    "menu": [
+      { "plato": "Lugar económico para mercar", "precio": "" }
+    ],
     "contacto": "Cra 16 #calle 15"
   },
   {
     "servicio": "Fruber",
     "nombre": "Ara",
-    "precio": "lugar económico para mercar",
+    "menu": [
+      { "plato": "Lugar económico para mercar", "precio": "" }
+    ],
     "contacto": "calle 14 #19-52"
   },
   {
     "servicio": "Fruber",
     "nombre": "Merca Plaza",
-    "precio": "lugar económico para mercar",
+    "menu": [
+      { "plato": "Lugar económico para mercar", "precio": "" }
+    ],
     "contacto": "cl 12 #17 - 30"
   },
 
   {
-    "servicio": "Domicilios",
-    "nombre": "Domicilios dani",
-    "precio": "6.000 la mínima",
-    "contacto": "3104547213 o 3203356962"
-  },
-
-  {
-    "servicio": "Hotel",
-    "nombre": "Hotel Acacías Real",
-    "precio": "$95.000 noche",
-    "contacto": "3108883344"
-  },
-  {
-    "servicio": "Hotel",
-    "nombre": "Hotel Wayra Club",
-    "precio": "$120.000 noche",
-    "contacto": "3204567890"
-  }
-]
-

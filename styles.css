@@ -4,6 +4,8 @@ body {
   background: #f4f6f9;
   color: #212529;
   line-height: 1.6;
+  margin: 0;
+  padding: 0;
 }
 
 /* Navbar con degradado elegante */
@@ -16,7 +18,7 @@ body {
   letter-spacing: 1px;
 }
 
-/* Secciones con tarjetas modernas */
+/* Secciones */
 section {
   padding: 50px 25px;
   background: #ffffff;
@@ -47,9 +49,23 @@ h2 {
   box-shadow: 0 6px 20px rgba(0,0,0,0.15);
 }
 
-/* Noticias (anomalias) */
+/* Tarjetas del comparador */
+#comparador-precios .card-title {
+  color: #1976d2;
+  font-weight: 600;
+}
+#comparador-precios ul {
+  padding-left: 0;
+  margin: 0;
+}
+#comparador-precios li {
+  margin-bottom: 6px;
+  color: #333;
+}
+
+/* Noticias */
 #anomalias .card-title {
-  color: #212529; /* gris oscuro sobrio */
+  color: #212529;
   font-weight: 600;
   font-size: 1.1rem;
 }
@@ -64,28 +80,24 @@ h2 {
 }
 
 /* Botones */
-.btn-outline-warning {
+.btn {
   border-radius: 25px;
   font-weight: bold;
   padding: 8px 18px;
   transition: all 0.3s ease;
 }
+.btn:hover {
+  transform: scale(1.05);
+}
 .btn-outline-warning:hover {
   background-color: #ffc107;
   color: #212529;
-  transform: scale(1.05);
 }
 
 /* Clima */
-#weather {
-  font-size: 1.2rem;
+#clima {
+  font-size: 1.1rem;
   font-weight: 500;
-}
-
-/* Comparador */
-#comparador .card-title {
-  color: #1976d2;
-  font-weight: 600;
 }
 
 /* Videos */
