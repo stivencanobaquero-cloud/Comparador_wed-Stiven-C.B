@@ -125,32 +125,44 @@
         });
       });
 
-    // Noticias vía rss2json (toda Colombia)
-    async function cargarAnomalias() {
-      const cont = document.getElementById("anomalias");
-      cont.innerHTML = "";
+    // Noticias vía AllOrigins (toda Colombia)
+try {
+  const rssUrl = "https://caracol.com.co/rss/";
+  const apiUrl = `https://api.allorigins.win/get?url=${encodeURIComponent(rssUrl)}`;
+  const res = await fetch(apiUrl);
+  const data = await res.json();
 
-      try {
-        const rssUrl = "https://caracol.com.co/rss/";
-        const apiUrl = `https://api.rss2json.com/v1/api.json?rss_url=${encodeURIComponent(rssUrl)}&api_key=gelyisdioqkyv56lb5gzgxjh2f7xi5syrkfjpzoh`;
-        const res = await fetch(apiUrl);
-        const data = await res.json();
+  // Parsear el XML que viene dentro de data.contents
+  const parser = new DOMParser();
+  const xml = parser.parseFromString(data.contents, "text/xml");
+  const items = xml.querySelectorAll("item");
 
-        data.items.slice(0,6).forEach(item => {
-          cont.innerHTML += `
-            <div class="col-md-4">
-              <div class="card border-warning shadow h-100">
-                <div class="card-body">
-                  <h5 class="card-title text-warning"><i class="bi bi-newspaper"></i> ${item.title}</h5>
-                  <p class="card-text">${item.description}</p>
-                  <span class="badge bg-warning">Fuente: Caracol RSS</span>
-                </div>
-              </div>
-            </div>`;
-        });
-      } catch (e) {
-        cont.innerHTML = "<p class='text-muted'>No se pudo cargar noticias RSS</p>";
-      }
+  let count = 0;
+  items.forEach(item => {
+    if (count < 6) {
+      const titulo = item.querySelector("title").textContent;
+      const desc = item.querySelector("description").textContent;
+
+      cont.innerHTML += `
+        <div class="col-md-4">
+          <div class="card border-warning shadow h-100">
+            <div class="card-body">
+              <h5 class="card-title text-warning"><i class="bi bi-newspaper"></i> ${titulo}</h5>
+              <p class="card-text">${desc}</p>
+              <span class="badge bg-warning">Fuente: Caracol RSS</span>
+            </div>
+          </div>
+        </div>`;
+      count++;
+    }
+  });
+
+  if (count === 0) {
+    cont.innerHTML = "<p class='text-muted'>No se encontraron noticias en el feed</p>";
+  }
+} catch (e) {
+  cont.innerHTML = "<p class='text-muted'>No se pudo cargar noticias RSS</p>";
+}
     }
     setInterval(cargarAnomalias, 60000);
     cargarAnomalias();
