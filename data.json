@@ -68,7 +68,7 @@
     "servicio": "Gimnasio",
     "nombre": "Goods empire",
     "menu": [
-      { "plato": "Mensualidad", "precio": "$70.000" }
+      { "mancuernas": "Mensualidad", "precio": "$70.000" }
     ],
     "contacto": "3101234567"
   },
@@ -76,7 +76,7 @@
     "servicio": "Gimnasio",
     "nombre": "Distrito 23",
     "menu": [
-      { "plato": "Mensualidad", "precio": "$70.000" }
+      { "mancuernas": "Mensualidad", "precio": "$70.000" }
     ],
     "contacto": "3001234567"
   },
@@ -84,7 +84,7 @@
     "servicio": "Gimnasio",
     "nombre": "Xtreme",
     "menu": [
-      { "plato": "Mensualidad", "precio": "$70.000" }
+      { "mancuernas": "Mensualidad", "precio": "$70.000" }
     ],
     "contacto": "3107654321"
   },
@@ -92,7 +92,7 @@
     "servicio": "Fruber",
     "nombre": "D1",
     "menu": [
-      { "plato": "Lugar económico para mercar", "precio": "" }
+      { "frutas": "Lugar económico para mercar", "precio": "" }
     ],
     "contacto": "Cra 16 #calle 15"
   },
@@ -100,7 +100,7 @@
     "servicio": "Fruber",
     "nombre": "Ara",
     "menu": [
-      { "plato": "Lugar económico para mercar", "precio": "" }
+      { "frutas": "Lugar económico para mercar", "precio": "" }
     ],
     "contacto": "calle 14 #19-52"
   },
@@ -108,7 +108,7 @@
     "servicio": "Fruber",
     "nombre": "Merca Plaza",
     "menu": [
-      { "plato": "Lugar económico para mercar", "precio": "" }
+      { "frutas": "Lugar económico para mercar", "precio": "" }
     ],
     "contacto": "cl 12 #17 - 30"
   },
@@ -116,7 +116,7 @@
     "servicio": "Domicilios",
     "nombre": "Domicilios dani",
     "menu": [
-      { "plato": "Servicio mínimo", "precio": "$6.000" }
+      { "moto": "Servicio mínimo", "precio": "$6.000" }
     ],
     "contacto": "3104547213 o 3203356962"
   },
@@ -124,7 +124,7 @@
     "servicio": "Hotel",
     "nombre": "Hotel Acacías Real",
     "menu": [
-      { "plato": "Noche", "precio": "$95.000" }
+      { "casa": "Noche", "precio": "$95.000" }
     ],
     "contacto": "3108883344"
   },
@@ -132,7 +132,7 @@
     "servicio": "Hotel",
     "nombre": "Hotel Wayra Club",
     "menu": [
-      { "plato": "Noche", "precio": "$120.000" }
+      { "casa": "Noche", "precio": "$120.000" }
     ],
     "contacto": "3204567890"
   }
