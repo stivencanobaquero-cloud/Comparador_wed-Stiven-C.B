@@ -100,10 +100,30 @@ h2 {
   font-weight: 500;
 }
 
-/* Videos */
-#videos video {
+/* Videos responsivos */
+.video-container {
+  position: relative;
+  width: 100%;
+  padding-bottom: 56.25%; /* relación 16:9 */
+  height: 0;
+  overflow: hidden;
+}
+
+.video-container iframe,
+.video-container video {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  border: none;
   border-radius: 12px;
   box-shadow: 0 2px 12px rgba(0,0,0,0.2);
+}
+
+/* Ocultar controles duplicados de Google Drive */
+.video-container iframe {
+  pointer-events: none;
 }
 
 /* Footer opcional */
@@ -115,3 +135,17 @@ footer {
   border-top-left-radius: 12px;
   border-top-right-radius: 12px;
 }
+
+/* Responsividad extra */
+@media (max-width: 768px) {
+  h2 {
+    font-size: 1.4rem;
+  }
+  .navbar-brand {
+    font-size: 1.2rem;
+  }
+  .card-title {
+    font-size: 1rem;
+  }
+}
+
