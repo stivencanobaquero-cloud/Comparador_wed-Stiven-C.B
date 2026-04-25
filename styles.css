@@ -1,3 +1,4 @@
+
 /* Tipografía y base */
 body {
   font-family: 'Roboto', sans-serif;
@@ -104,7 +105,7 @@ h2 {
 .video-container {
   position: relative;
   width: 100%;
-  padding-bottom: 56.25%; /* relación 16:9 */
+  padding-bottom: 56.25%; /* relación 16:9 en PC */
   height: 0;
   overflow: hidden;
 }
@@ -119,12 +120,10 @@ h2 {
   border: none;
   border-radius: 12px;
   box-shadow: 0 2px 12px rgba(0,0,0,0.2);
+  background: #000;
 }
 
-/* Importante:
-   - Video local (Video 1) usa controles propios del <video>.
-   - Videos de Drive mantienen sus controles originales.
-*/
+/* PC mantiene iframe */
 .video-container iframe {
   pointer-events: auto;
 }
@@ -141,15 +140,9 @@ footer {
 
 /* Responsividad extra */
 @media (max-width: 768px) {
-  h2 {
-    font-size: 1.4rem;
-  }
-  .navbar-brand {
-    font-size: 1.2rem;
-  }
-  .card-title {
-    font-size: 1rem;
-  }
+  h2 { font-size: 1.4rem; }
+  .navbar-brand { font-size: 1.2rem; }
+  .card-title { font-size: 1rem; }
 
   /* Ajuste especial para videos en celular */
   .video-container {
@@ -157,15 +150,16 @@ footer {
     width: 100%;          /* ancho */
   }
 
-  .video-container iframe,
+  /* Ocultar iframe en móvil */
+  .video-container iframe {
+    display: none !important;
+  }
+
+  /* Forzar video HTML5 a mostrarse completo */
   .video-container video {
-    width: 100%;
-    height: 100%;
-    max-width: none;
-    object-fit: contain; /* muestra todo el video */
-    transform: scale(0.9); /* encoge para que se vea completo */
-    transform-origin: top left; /* clave para que se ajuste bien */
+    object-fit: contain;
+    transform: scale(0.9); /* ajusta según necesites */
+    transform-origin: top left;
   }
 }
-
 
