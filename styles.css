@@ -119,11 +119,15 @@ h2 {
   border: none;
   border-radius: 12px;
   box-shadow: 0 2px 12px rgba(0,0,0,0.2);
+  object-fit: cover; /* asegura que se vea completo en móvil */
 }
 
-/* Ocultar controles duplicados de Google Drive */
+/* Importante:
+   - Video local (Video 1) usa controles propios del <video>.
+   - Videos de Drive mantienen sus controles originales.
+*/
 .video-container iframe {
-  pointer-events: none;
+  pointer-events: auto; /* dejar controles de Drive activos */
 }
 
 /* Footer opcional */
@@ -148,4 +152,3 @@ footer {
     font-size: 1rem;
   }
 }
-
