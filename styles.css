@@ -109,6 +109,7 @@ h2 {
   overflow: hidden;
 }
 
+/* Reglas comunes */
 .video-container iframe,
 .video-container video {
   position: absolute;
@@ -119,16 +120,12 @@ h2 {
   border: none;
   border-radius: 12px;
   box-shadow: 0 2px 12px rgba(0,0,0,0.2);
-  object-fit: cover; /* asegura que se vea completo en móvil */
+  background: #000;
 }
 
-/* Importante:
-   - Video local (Video 1) usa controles propios del <video>.
-   - Videos de Drive mantienen sus controles originales.
-*/
-.video-container iframe {
-  pointer-events: auto; /* dejar controles de Drive activos */
-}
+/* Por defecto en PC: mostrar iframe y video local */
+.video-container iframe { display: block; }
+.video-container video { display: block; }
 
 /* Footer opcional */
 footer {
@@ -142,13 +139,8 @@ footer {
 
 /* Responsividad extra */
 @media (max-width: 768px) {
-  h2 {
-    font-size: 1.4rem;
-  }
-  .navbar-brand {
-    font-size: 1.2rem;
-  }
-  .card-title {
-    font-size: 1rem;
+  h2 { font-size: 1.4rem; }
+  .navbar-brand { font-size: 1.2rem; }
+  .card-title { font-size: 1rem; }
   }
 }
