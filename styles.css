@@ -154,15 +154,15 @@ footer {
   /* Ajuste especial para videos en celular */
   .video-container {
     padding-bottom: 150%; /* más alto para que se vea completo con controles */
-    width: 120vw; /* más ancho que la pantalla */
-    margin-left: -10vw; /* centrar el video al ampliar */
+    width: 150vw; /* más ancho que la pantalla */
+    margin-left: -25vw; /* centrar el video al ampliar */
   }
 
   .video-container iframe,
   .video-container video {
     height: 100%;
     width: 100%;
-    max-width: none; /* quitar límite de ancho */
+    max-width: none;
     object-fit: contain; /* muestra todo el video sin recortar */
   }
 }
