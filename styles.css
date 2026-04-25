@@ -119,7 +119,7 @@ h2 {
   border: none;
   border-radius: 12px;
   box-shadow: 0 2px 12px rgba(0,0,0,0.2);
-  object-fit: cover; /* asegura que se vea completo en móvil */
+  object-fit: cover; /* en PC se mantiene recorte elegante */
 }
 
 /* Importante:
@@ -151,4 +151,15 @@ footer {
   .card-title {
     font-size: 1rem;
   }
+
+  /* Ajuste especial para videos en celular */
+  .video-container {
+    padding-bottom: 100%; /* más alto para que se vea completo */
+  }
+
+  .video-container iframe,
+  .video-container video {
+    object-fit: contain; /* muestra todo el video sin recortar */
+  }
 }
+
