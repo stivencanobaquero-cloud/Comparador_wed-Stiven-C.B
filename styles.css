@@ -153,7 +153,7 @@ footer {
 
   /* Ajuste especial para videos en celular */
   .video-container {
-    padding-bottom: 120%; /* más alto para que se vea completo */
+    padding-bottom: 150%; /* más alto para que se vea completo con controles */
   }
 
   .video-container iframe,
