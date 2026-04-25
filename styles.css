@@ -123,10 +123,9 @@ h2 {
   background: #000;
 }
 
-/* PC mantiene iframe */
-.video-container iframe {
-  pointer-events: auto;
-}
+/* Por defecto (PC): mostrar iframe, ocultar video */
+.video-container iframe { display: block; }
+.video-container video { display: none; }
 
 /* Footer opcional */
 footer {
@@ -146,8 +145,8 @@ footer {
 
   /* Ajuste especial para videos en celular */
   .video-container {
-    padding-bottom: 120%; /* alto */
-    width: 100%;          /* ancho */
+    padding-bottom: 120%; /* alto mayor para móviles */
+    width: 100%;
   }
 
   /* Ocultar iframe en móvil */
@@ -155,11 +154,11 @@ footer {
     display: none !important;
   }
 
-  /* Forzar video HTML5 a mostrarse completo */
+  /* Mostrar video HTML5 en móvil */
   .video-container video {
+    display: block !important;
     object-fit: contain;
-    transform: scale(0.9); /* ajusta según necesites */
+    transform: scale(0.95); /* ajusta si quieres más o menos zoom */
     transform-origin: top left;
   }
 }
-
