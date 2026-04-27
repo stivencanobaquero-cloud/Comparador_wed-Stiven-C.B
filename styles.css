@@ -6,6 +6,8 @@ body {
   line-height: 1.6;
   margin: 0;
   padding: 0;
+  max-width: 1200px; /* ancho máximo en PC */
+  margin: 0 auto;
 }
 
 /* Navbar con degradado elegante */
@@ -108,8 +110,6 @@ h2 {
   height: 0;
   overflow: hidden;
 }
-
-/* Reglas comunes */
 .video-container iframe,
 .video-container video {
   position: absolute;
@@ -122,8 +122,6 @@ h2 {
   box-shadow: 0 2px 12px rgba(0,0,0,0.2);
   background: #000;
 }
-
-/* Por defecto en PC: mostrar iframe y video local */
 .video-container iframe { display: block; }
 .video-container video { display: block; }
 
@@ -142,5 +140,15 @@ footer {
   h2 { font-size: 1.4rem; }
   .navbar-brand { font-size: 1.2rem; }
   .card-title { font-size: 1rem; }
+
+  /* Escala visual en móviles */
+  body {
+    transform: scale(1.1);   /* agranda todo el contenido */
+    transform-origin: top center;
+  }
+
+  .video-container {
+    padding-bottom: 65%; /* un poco más alto en móvil */
   }
 }
+
