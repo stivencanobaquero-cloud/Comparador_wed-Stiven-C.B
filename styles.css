@@ -4,10 +4,9 @@ body {
   background: #f4f6f9;
   color: #212529;
   line-height: 1.6;
-  margin: 0;
+  margin: 0 auto; /* centra y elimina duplicado */
   padding: 0;
   max-width: 1200px; /* ancho máximo en PC */
-  margin: 0 auto;
 }
 
 /* Navbar con degradado elegante */
@@ -151,4 +150,3 @@ footer {
     padding-bottom: 65%; /* un poco más alto en móvil */
   }
 }
-
