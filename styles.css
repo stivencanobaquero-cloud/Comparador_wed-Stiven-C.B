@@ -105,7 +105,7 @@ h2 {
 .video-container {
   position: relative;
   width: 100%;
-  padding-bottom: 100%; /* relación 16:9 */
+  padding-bottom: 42.85%; /* relación 21:9, más ancho en PC */
   height: 0;
   overflow: hidden;
 }
@@ -124,16 +124,6 @@ h2 {
 .video-container iframe { display: block; }
 .video-container video { display: block; }
 
-/* Footer opcional */
-footer {
-  text-align: center;
-  padding: 20px;
-  background: #0d47a1;
-  color: #fff;
-  border-top-left-radius: 12px;
-  border-top-right-radius: 12px;
-}
-
 /* Responsividad extra */
 @media (max-width: 768px) {
   h2 { font-size: 1.4rem; }
@@ -148,6 +138,8 @@ footer {
   }
 
   .video-container {
-    padding-bottom: 100%; /* un poco más alto en móvil */
+    padding-bottom: 50%; /* un poco más alto en móvil, pero sigue ancho */
   }
 }
+
+
