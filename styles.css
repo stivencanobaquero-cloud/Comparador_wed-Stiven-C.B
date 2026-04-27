@@ -142,11 +142,12 @@ footer {
 
   /* Escala visual en móviles */
   body {
-    transform: scale(1.1);   /* agranda todo el contenido */
+    transform: scale(1.1);   /* agranda toda la página */
     transform-origin: top center;
+    overflow-x: hidden;      /* evita scroll lateral */
   }
 
   .video-container {
-    padding-bottom: 65%; /* un poco más alto en móvil */
+    padding-bottom: 70%; /* un poco más alto en móvil */
   }
 }
