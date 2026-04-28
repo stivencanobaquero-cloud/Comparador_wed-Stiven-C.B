@@ -316,114 +316,83 @@ cargarComparador();
   </div>
 </section>
     <!-- ===========================
-     Sección: Expresa cómo te sientes hoy
+     Sección: Radio en vivo
      =========================== -->
-<section id="sentimientos" class="container my-4">
-  <h2 class="text-center">🫶 Expresa cómo te sientes hoy</h2>
-
-  <div class="card mb-3">
-    <div class="card-body">
-      <textarea id="contribText" class="form-control" rows="3" placeholder="Máx 140 caracteres"></textarea>
-      <div class="d-flex justify-content-between align-items-center mt-2">
-        <small id="charCount">0/140</small>
-        <button id="sendContrib" class="btn btn-primary btn-sm">Enviar (una vez)</button>
-      </div>
-    </div>
-  </div>
-
-  <div id="storyDisplay" style="white-space:pre-wrap; min-height:80px; background:#f8f9fa; padding:12px; border-radius:6px;">
-    <!-- Comentarios en tiempo real -->
-  </div>
-
-  <div class="mt-3 text-center">
-    <button id="resetBtn" class="btn btn-danger btn-sm">Reiniciar comentarios</button>
-  </div>
+<section id="radio" class="container my-4">
+  <h2 class="text-center mb-3" style="font-weight:700; color:#6c63ff;">
+    🎶 Radio en vivo - La Mega
+  </h2>
+  <p class="text-center" style="color:#555; font-size:1.1rem;">
+    Disfruta la música urbana y reguetón de La Mega en vivo, 24/7.
+  </p>
 </section>
 
-<style>
-  #sentimientos .card { border: none; }
-  .contrib-row { margin-bottom:8px; padding:6px; background:#fff; border-radius:6px; box-shadow:0 1px 3px rgba(0,0,0,0.1); }
-</style>
-
-<!-- Firebase -->
-<script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-app-compat.js"></script>
-<script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-auth-compat.js"></script>
-<script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-firestore-compat.js"></script>
+<!-- Barra fija de radio -->
+<footer style="position:fixed; bottom:0; left:0; width:100%; background:linear-gradient(90deg,#6c63ff,#3f3d56); padding:12px; z-index:999; box-shadow:0 -2px 6px rgba(0,0,0,0.2);">
+  <div style="display:flex; align-items:center; justify-content:center; gap:12px; color:#fff; font-weight:600;">
+    <span>📻 La Mega en vivo</span>
+    <audio controls autoplay style="flex:1; max-width:600px;">
+      <source src="https://streaming.rcnmundo.com/lamega.mp3" type="audio/mpeg">
+      Tu navegador no soporta el reproductor de audio.
+    </audio>
+  </div>
+</footer>
+  <!-- ===========================
+     Sección: Partidos en vivo
+     =========================== -->
+<section id="partidos" class="container my-5">
+  <h2 class="text-center" style="font-weight:700; color:#dc3545;">
+    ⚽ Partidos en vivo
+  </h2>
+  <div id="liveMatches" class="mt-3"></div>
+</section>
 
 <script>
-/* CONFIGURA TU FIREBASE */
-const firebaseConfig = {
-  apiKey: "AIzaSyAnSxi9fTHbpb5ySW7mG1BXHd1MbeN-XJE",
-  authDomain: "sentimientos-25e26.firebaseapp.com",
-  projectId: "sentimientos-25e26",
-  storageBucket: "sentimientos-25e26.firebasestorage.app",
-  messagingSenderId: "831762215904",
-  appId: "1:831762215904:web:5c64d56d37d3f6198bf185",
-  measurementId: "G-ZGTDH0GS50"
-};
-firebase.initializeApp(firebaseConfig);
-const auth = firebase.auth();
-const db = firebase.firestore();
+const API_KEY = "b649362841ef2b8162ef43448225b19b";
 
-const MAX_CHARS = 140;
-const contribText = document.getElementById('contribText');
-const charCount = document.getElementById('charCount');
-const sendContrib = document.getElementById('sendContrib');
-const storyDisplay = document.getElementById('storyDisplay');
-const resetBtn = document.getElementById('resetBtn');
+// IDs de ligas en API-Football (ejemplo)
+const ligasPermitidas = [
+  2,   // Champions League
+  78,  // Bundesliga
+  39,  // Premier League
+  140, // LaLiga
+  239, // Liga BetPlay Colombia
+  1    // Mundial
+];
 
-/* CONTADOR DE CARACTERES */
-contribText.addEventListener('input', () => {
-  const n = contribText.value.length;
-  charCount.textContent = `${n}/${MAX_CHARS}`;
-  if (n > MAX_CHARS) charCount.classList.add('text-danger');
-  else charCount.classList.remove('text-danger');
-});
-
-/* ENVIAR COMENTARIO (una vez por usuario) */
-sendContrib.addEventListener('click', async () => {
-  const text = contribText.value.trim();
-  if (text.length === 0) { alert('Escribe algo antes de enviar.'); return; }
-  if (text.length > MAX_CHARS) { alert('Máximo ' + MAX_CHARS + ' caracteres.'); return; }
-
-  // login anónimo si no existe
-  if (!auth.currentUser) {
-    await auth.signInAnonymously();
-  }
-  const uid = auth.currentUser.uid;
-
-  const contribRef = db.collection('sentimientos').doc(uid);
-  const snap = await contribRef.get();
-  if (snap.exists) {
-    alert('Ya escribiste en esta historia. Espera la próxima.');
-    return;
-  }
-
-  await contribRef.set({ text: text, ts: Date.now() });
-  contribText.value = '';
-  charCount.textContent = `0/${MAX_CHARS}`;
-});
-
-/* MOSTRAR EN TIEMPO REAL */
-db.collection('sentimientos').orderBy('ts','asc')
-  .onSnapshot(snapshot => {
-    storyDisplay.innerHTML = '';
-    snapshot.forEach(doc => {
-      const div = document.createElement('div');
-      div.className = 'contrib-row';
-      div.textContent = doc.data().text;
-      storyDisplay.appendChild(div);
-    });
+async function cargarPartidos() {
+  const url = "https://v3.football.api-sports.io/fixtures?live=all";
+  const res = await fetch(url, {
+    headers: { "x-apisports-key": API_KEY }
   });
+  const data = await res.json();
+  const cont = document.getElementById("liveMatches");
+  cont.innerHTML = "";
 
-/* REINICIAR COMENTARIOS */
-resetBtn.addEventListener('click', async () => {
-  const snap = await db.collection('sentimientos').get();
-  const batch = db.batch();
-  snap.forEach(doc => batch.delete(doc.ref));
-  await batch.commit();
-  alert('Comentarios reiniciados. Ahora todos pueden volver a escribir.');
-});
+  data.response.forEach(match => {
+    // Filtrar solo las ligas que nos interesan
+    if (!ligasPermitidas.includes(match.league.id)) return;
+
+    const liga = match.league.name;
+    const equipos = `${match.teams.home.name} vs ${match.teams.away.name}`;
+    const marcador = `${match.goals.home} - ${match.goals.away}`;
+    const minuto = match.fixture.status.elapsed;
+
+    const card = document.createElement("div");
+    card.className = "card mb-2 shadow-sm";
+    card.innerHTML = `
+      <div class="card-body">
+        <h5>${liga}</h5>
+        <p>${equipos}</p>
+        <p><strong>${marcador}</strong> (min ${minuto})</p>
+      </div>`;
+    cont.appendChild(card);
+  });
+}
+
+// Actualizar cada 60 segundos
+cargarPartidos();
+setInterval(cargarPartidos, 60000);
 </script>
 
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
