@@ -136,10 +136,68 @@ h2 {
     transform-origin: top center;
     overflow-x: hidden;      /* evita scroll lateral */
   }
-
+ 
   .video-container {
     padding-bottom: 85%; /* un poco más alto en móvil, pero sigue ancho */
   }
+  /* ===========================
+   Estilos para Radio en vivo
+   =========================== */
+#radio {
+  text-align: center;
+}
+
+#radio h2 {
+  color: #6c63ff;
+  border-bottom: 3px solid #ffc107;
+}
+
+#radio audio {
+  width: 100%;
+  max-width: 500px;
+  margin: 15px auto;
+  display: block;
+  border-radius: 8px;
+  box-shadow: 0 2px 12px rgba(0,0,0,0.2);
+}
+
+/* ===========================
+   Estilos para Partidos en vivo
+   =========================== */
+#partidos h2 {
+  color: #dc3545;
+  border-bottom: 3px solid #007bff;
+}
+
+#liveMatches {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+  gap: 16px;
+}
+
+#liveMatches .card {
+  border-radius: 12px;
+  background: #ffffff;
+  box-shadow: 0 2px 12px rgba(0,0,0,0.1);
+  transition: transform 0.25s ease, box-shadow 0.25s ease;
+}
+
+#liveMatches .card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 6px 20px rgba(0,0,0,0.15);
+}
+
+#liveMatches .card-body h5 {
+  font-weight: 700;
+  color: #007bff;
+  margin-bottom: 8px;
+}
+
+#liveMatches .card-body p {
+  margin: 4px 0;
+  font-size: 1rem;
+  color: #333;
+ }
 }
 
 
