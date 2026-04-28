@@ -136,11 +136,13 @@ h2 {
     transform-origin: top center;
     overflow-x: hidden;      /* evita scroll lateral */
   }
- 
+
   .video-container {
     padding-bottom: 85%; /* un poco más alto en móvil, pero sigue ancho */
   }
-  /* ===========================
+}  /* <-- aquí cierra el media query */
+
+/* ===========================
    Estilos para Radio en vivo
    =========================== */
 #radio {

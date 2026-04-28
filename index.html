@@ -321,28 +321,25 @@ cargarComparador();
      =========================== -->
 <section id="radio" class="container my-4">
   <h2 class="text-center mb-3" style="font-weight:700; color:#6c63ff;">
-    🎶 Radio en vivo - Tropicana Bogotá
+    🎶 Radio en vivo - Radioacktiva Bogotá
   </h2>
   <div style="max-width:600px; margin:auto; text-align:center;">
-    <button id="playRadio" class="btn btn-primary">
-      ▶ Escuchar Tropicana
-    </button>
+    <button id="playRadio" class="btn btn-primary">▶ Escuchar Radio</button>
+    <audio id="radioStream" style="display:none;">
+      <source src="https://playerservices.streamtheworld.com/api/livestream-redirect/RADIOACTIVA_BOGOTA.mp3" type="audio/mpeg">
+    </audio>
   </div>
-  <audio id="tropicanaRadio" style="display:none;">
-    <source src="https://playerservices.streamtheworld.com/api/livestream-redirect/TROPICANA_BOGOTA.mp3" type="audio/mpeg">
-    Tu navegador no soporta el reproductor de audio.
-  </audio>
 </section>
 
 <script>
   document.getElementById("playRadio").addEventListener("click", function() {
-    const radio = document.getElementById("tropicanaRadio");
+    const radio = document.getElementById("radioStream");
     if (radio.paused) {
       radio.play();
-      this.textContent = "⏸ Pausar";
+      this.textContent = "⏸ Pausar Radio";
     } else {
       radio.pause();
-      this.textContent = "▶ Escuchar Tropicana";
+      this.textContent = "▶ Escuchar Radio";
     }
   });
 </script>
