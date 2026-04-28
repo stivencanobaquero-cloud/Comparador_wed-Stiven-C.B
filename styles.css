@@ -140,29 +140,8 @@ h2 {
   .video-container {
     padding-bottom: 85%; /* un poco más alto en móvil, pero sigue ancho */
   }
-}  /* <-- aquí cierra el media query */
-
-/* ===========================
-   Estilos para Radio en vivo
-   =========================== */
-#radio {
-  text-align: center;
-}
-
-#radio h2 {
-  color: #6c63ff;
-  border-bottom: 3px solid #ffc107;
-}
-
-#radio audio {
-  width: 100%;
-  max-width: 500px;
-  margin: 15px auto;
-  display: block;
-  border-radius: 8px;
-  box-shadow: 0 2px 12px rgba(0,0,0,0.2);
-}
-
+   /* <-- aquí cierra el media query */
+  }
 /* ===========================
    Estilos para Partidos en vivo
    =========================== */
@@ -200,6 +179,27 @@ h2 {
   font-size: 1rem;
   color: #333;
  }
+/* Playlist YouTube */
+#playlist {
+  text-align: center;
 }
+
+#playlist h2 {
+  font-weight: 700;
+  color: #6c63ff;              /* morado elegante */
+  border-bottom: 3px solid #ffc107; /* subrayado dorado */
+  display: inline-block;
+  padding-bottom: 6px;
+  margin-bottom: 25px;
+}
+
+#playlist .video-container {
+  border-radius: 12px;
+  overflow: hidden;
+  box-shadow: 0 4px 16px rgba(0,0,0,0.2); /* sombra elegante */
+}
+
+
+
 
 
