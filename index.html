@@ -316,34 +316,19 @@ cargarComparador();
     </div>
   </div>
 </section>
-   <!-- ===========================
-     Sección: Radio en vivo
-     =========================== -->
-<section id="radio" class="container my-4">
-  <h2 class="text-center mb-3" style="font-weight:700; color:#6c63ff;">
-    🎶 Radio en vivo - Radioacktiva Bogotá
+   <section id="playlist" class="container my-5">
+  <h2 class="text-center mb-4" style="font-weight:700; color:#6c63ff; border-bottom:3px solid #ffc107; display:inline-block; padding-bottom:6px;">
+    🎶 Playlist en YouTube
   </h2>
-  <div style="max-width:600px; margin:auto; text-align:center;">
-    <button id="playRadio" class="btn btn-primary">▶ Escuchar Radio</button>
-    <audio id="radioStream" style="display:none;">
-      <source src="https://playerservices.streamtheworld.com/api/livestream-redirect/RADIOACTIVA_BOGOTA.mp3" type="audio/mpeg">
-    </audio>
+  <div class="video-container" style="border-radius:12px; overflow:hidden; box-shadow:0 4px 16px rgba(0,0,0,0.2);">
+    <iframe src="https://www.youtube.com/embed/videoseries?list=PLd8bW1oFiN_BCPkc0hF7ZTrQvug1fZldg"
+            frameborder="0"
+            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+            allowfullscreen
+            style="border:none; border-radius:12px;">
+    </iframe>
   </div>
 </section>
-
-<script>
-  document.getElementById("playRadio").addEventListener("click", function() {
-    const radio = document.getElementById("radioStream");
-    if (radio.paused) {
-      radio.play();
-      this.textContent = "⏸ Pausar Radio";
-    } else {
-      radio.pause();
-      this.textContent = "▶ Escuchar Radio";
-    }
-  });
-</script>
-
   <!-- ===========================
      Sección: Partidos en vivo
      =========================== -->
@@ -433,9 +418,9 @@ document.addEventListener("DOMContentLoaded", () => {
     }
   }
 
-  // Cargar al inicio y cada 60s
-  cargarPartidos();
-  const intervalId = setInterval(cargarPartidos, 60000);
+ // Cargar al inicio y cada 5 minutos
+cargarPartidos();
+const intervalId = setInterval(cargarPartidos, 300000); // 300000 ms = 5 minutos
 
   // Recargar al cambiar filtro
   filtroSelect.addEventListener("change", () => {
