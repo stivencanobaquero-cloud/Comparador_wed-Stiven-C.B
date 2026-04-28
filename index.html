@@ -322,22 +322,18 @@ cargarComparador();
   <h2 class="text-center mb-3" style="font-weight:700; color:#6c63ff;">
     🎶 Radio en vivo - La Mega
   </h2>
-  <p class="text-center" style="color:#555; font-size:1.1rem;">
-    Disfruta la música urbana y reguetón de La Mega en vivo, 24/7.
-  </p>
-</section>
-
-<!-- Barra fija de radio -->
-<footer style="position:fixed; bottom:0; left:0; width:100%; background:linear-gradient(90deg,#6c63ff,#3f3d56); padding:12px; z-index:999; box-shadow:0 -2px 6px rgba(0,0,0,0.2);">
-  <div style="display:flex; align-items:center; justify-content:center; gap:12px; color:#fff; font-weight:600;">
-    <span>📻 La Mega en vivo</span>
-    <audio controls autoplay style="flex:1; max-width:600px;">
+  <div class="video-container">
+    <audio controls autoplay style="width:100%;">
       <source src="https://streaming.rcnmundo.com/lamega.mp3" type="audio/mpeg">
       Tu navegador no soporta el reproductor de audio.
     </audio>
   </div>
-</footer>
-  <!-- ===========================
+  <p class="text-center mt-2" style="color:#555; font-size:1.1rem;">
+    Disfruta la música urbana y reguetón de La Mega en vivo, 24/7.
+  </p>
+</section>
+
+<!-- ===========================
      Sección: Partidos en vivo
      =========================== -->
 <section id="partidos" class="container my-5">
@@ -350,7 +346,7 @@ cargarComparador();
 <script>
 const API_KEY = "b649362841ef2b8162ef43448225b19b";
 
-// IDs de ligas en API-Football (ejemplo)
+// IDs de ligas en API-Football
 const ligasPermitidas = [
   2,   // Champions League
   78,  // Bundesliga
@@ -362,32 +358,35 @@ const ligasPermitidas = [
 
 async function cargarPartidos() {
   const url = "https://v3.football.api-sports.io/fixtures?live=all";
-  const res = await fetch(url, {
-    headers: { "x-apisports-key": API_KEY }
-  });
-  const data = await res.json();
-  const cont = document.getElementById("liveMatches");
-  cont.innerHTML = "";
+  try {
+    const res = await fetch(url, {
+      headers: { "x-apisports-key": API_KEY }
+    });
+    const data = await res.json();
+    const cont = document.getElementById("liveMatches");
+    cont.innerHTML = "";
 
-  data.response.forEach(match => {
-    // Filtrar solo las ligas que nos interesan
-    if (!ligasPermitidas.includes(match.league.id)) return;
+    data.response.forEach(match => {
+      if (!ligasPermitidas.includes(match.league.id)) return;
 
-    const liga = match.league.name;
-    const equipos = `${match.teams.home.name} vs ${match.teams.away.name}`;
-    const marcador = `${match.goals.home} - ${match.goals.away}`;
-    const minuto = match.fixture.status.elapsed;
+      const liga = match.league.name;
+      const equipos = `${match.teams.home.name} vs ${match.teams.away.name}`;
+      const marcador = `${match.goals.home} - ${match.goals.away}`;
+      const minuto = match.fixture.status.elapsed ?? 0;
 
-    const card = document.createElement("div");
-    card.className = "card mb-2 shadow-sm";
-    card.innerHTML = `
-      <div class="card-body">
-        <h5>${liga}</h5>
-        <p>${equipos}</p>
-        <p><strong>${marcador}</strong> (min ${minuto})</p>
-      </div>`;
-    cont.appendChild(card);
-  });
+      const card = document.createElement("div");
+      card.className = "card mb-2 shadow-sm";
+      card.innerHTML = `
+        <div class="card-body">
+          <h5>${liga}</h5>
+          <p>${equipos}</p>
+          <p><strong>${marcador}</strong> (min ${minuto})</p>
+        </div>`;
+      cont.appendChild(card);
+    });
+  } catch (err) {
+    console.error("Error cargando partidos:", err);
+  }
 }
 
 // Actualizar cada 60 segundos
@@ -395,6 +394,6 @@ cargarPartidos();
 setInterval(cargarPartidos, 60000);
 </script>
 
-  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
 </body>
-</html> 
+</html>
