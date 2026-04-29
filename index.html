@@ -92,6 +92,61 @@ cargarMunicipios();
         <p class="text-muted text-center">Cargando comparador...</p>
       </div>
     </section>
+      // --- COMPARADOR ---
+  async function cargarComparador() {
+  const cont = document.getElementById("comparador-precios");
+  cont.innerHTML = "<p class='text-muted text-center'>Cargando comparador...</p>";
+
+  try {
+    const res = await fetch("data.json");
+    if (!res.ok) throw new Error("No se encontró data.json");
+    const data = await res.json();
+
+    cont.innerHTML = "";
+    data.forEach(item => {
+      let precioHTML = "";
+
+      // Definir ícono según servicio
+      let icono = "🍽️"; // por defecto restaurante
+      if (item.servicio === "Gimnasio") icono = "💪";
+      else if (item.servicio === "Hotel") icono = "🏨";
+      else if (item.servicio === "Domicilios") icono = "🚚";
+      else if (item.servicio === "Fruber") icono = "🍎";
+
+      if (item.menu && Array.isArray(item.menu)) {
+        precioHTML = "<ul class='list-unstyled'>";
+        item.menu.forEach(m => {
+          // tomar cualquier campo distinto de precio
+          const keys = Object.keys(m).filter(k => k !== "precio");
+          const nombre = keys.length > 0 ? m[keys[0]] : "Producto/servicio";
+          const precio = m.precio && m.precio.trim() !== "" ? m.precio : "Consultar en el local";
+          precioHTML += `<li>${icono} ${nombre} — <b>${precio}</b></li>`;
+        });
+        precioHTML += "</ul>";
+      } else {
+        const precio = item.precio ? item.precio : "Consultar en el local";
+        precioHTML = `<p class="text-success fw-bold">${icono} ${precio}</p>`;
+      }
+
+      cont.innerHTML += `
+        <div class="col-md-4">
+          <div class="card h-100 shadow">
+            <div class="card-body d-flex flex-column">
+              <h5 class="card-title text-primary">${item.nombre}</h5>
+              <p class="card-subtitle mb-2 text-muted">${item.servicio}</p>
+              <div class="flex-grow-1">${precioHTML}</div>
+              <p class="mt-3 text-muted">🌐 ${item.contacto}</p>
+            </div>
+          </div>
+        </div>
+      `;
+    });
+  } catch (e) {
+    cont.innerHTML = "<p class='text-danger text-center'>Error cargando comparador</p>";
+    console.error("Error cargarComparador:", e);
+  }
+}
+  cargarComparador();
 
     <!-- Videos (penúltimos) -->
     <section class="row">
@@ -194,65 +249,6 @@ cargarMunicipios();
     </section>
 
   </main>
-
-      // --- COMPARADOR ---
-  async function cargarComparador() {
-  const cont = document.getElementById("comparador-precios");
-  cont.innerHTML = "<p class='text-muted text-center'>Cargando comparador...</p>";
-
-  try {
-    const res = await fetch("data.json");
-    if (!res.ok) throw new Error("No se encontró data.json");
-    const data = await res.json();
-
-    cont.innerHTML = "";
-    data.forEach(item => {
-      let precioHTML = "";
-
-      // Definir ícono según servicio
-      let icono = "🍽️"; // por defecto restaurante
-      if (item.servicio === "Gimnasio") icono = "💪";
-      else if (item.servicio === "Hotel") icono = "🏨";
-      else if (item.servicio === "Domicilios") icono = "🚚";
-      else if (item.servicio === "Fruber") icono = "🍎";
-
-      if (item.menu && Array.isArray(item.menu)) {
-        precioHTML = "<ul class='list-unstyled'>";
-        item.menu.forEach(m => {
-          // tomar cualquier campo distinto de precio
-          const keys = Object.keys(m).filter(k => k !== "precio");
-          const nombre = keys.length > 0 ? m[keys[0]] : "Producto/servicio";
-          const precio = m.precio && m.precio.trim() !== "" ? m.precio : "Consultar en el local";
-          precioHTML += `<li>${icono} ${nombre} — <b>${precio}</b></li>`;
-        });
-        precioHTML += "</ul>";
-      } else {
-        const precio = item.precio ? item.precio : "Consultar en el local";
-        precioHTML = `<p class="text-success fw-bold">${icono} ${precio}</p>`;
-      }
-
-      cont.innerHTML += `
-        <div class="col-md-4">
-          <div class="card h-100 shadow">
-            <div class="card-body d-flex flex-column">
-              <h5 class="card-title text-primary">${item.nombre}</h5>
-              <p class="card-subtitle mb-2 text-muted">${item.servicio}</p>
-              <div class="flex-grow-1">${precioHTML}</div>
-              <p class="mt-3 text-muted">🌐 ${item.contacto}</p>
-            </div>
-          </div>
-        </div>
-      `;
-    });
-  } catch (e) {
-    cont.innerHTML = "<p class='text-danger text-center'>Error cargando comparador</p>";
-    console.error("Error cargarComparador:", e);
-  }
-}
-cargarComparador();
-
-
-        cargarComparador();
 
     // --- NOTICIAS DESDE BACKEND ---
     async function cargarAnomalias() {
@@ -369,20 +365,20 @@ document.addEventListener("DOMContentLoaded", () => {
 
   async function cargarPartidos() {
     statusEl.style.display = "none";
-    liveContainer.innerHTML = "";
+    liveContainer.innerHTML = "<p class='text-muted'>Cargando partidos...</p>";
 
     const liga = filtroSelect.value || "bl1"; // por defecto Bundesliga
-    const url = `https://www.openligadb.de/api/getmatchdata/${liga}/2024`;
-
-    liveContainer.innerHTML = "<p class='text-muted'>Cargando partidos...</p>";
+    const url = `https://www.openligadb.de/api/getmatchdata/${liga}/2026`;
 
     try {
       const res = await fetch(url);
+      if (!res.ok) throw new Error(`HTTP ${res.status}`);
       const data = await res.json();
 
       if (!Array.isArray(data) || data.length === 0) {
         statusEl.textContent = "No hay partidos disponibles.";
         statusEl.style.display = "block";
+        liveContainer.innerHTML = "";
         return;
       }
 
@@ -437,6 +433,7 @@ document.addEventListener("DOMContentLoaded", () => {
       console.error("Error cargando partidos:", err);
       statusEl.textContent = "Error al cargar partidos.";
       statusEl.style.display = "block";
+      liveContainer.innerHTML = "";
     }
   }
 
