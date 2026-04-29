@@ -1,0 +1,22 @@
+[
+  {"nombre":"Acacías","lat":3.986,"lon":-73.765},
+  {"nombre":"Bogotá","lat":4.711,"lon":-74.072},
+  {"nombre":"Medellín","lat":6.244,"lon":-75.581},
+  {"nombre":"Cali","lat":3.451,"lon":-76.532},
+  {"nombre":"Barranquilla","lat":10.963,"lon":-74.796},
+  {"nombre":"Cartagena","lat":10.391,"lon":-75.479},
+  {"nombre":"Santa Marta","lat":11.240,"lon":-74.199},
+  {"nombre":"Villavicencio","lat":4.142,"lon":-73.629},
+  {"nombre":"Pereira","lat":4.813,"lon":-75.696},
+  {"nombre":"Bucaramanga","lat":7.125,"lon":-73.119},
+  {"nombre":"Manizales","lat":5.070,"lon":-75.520},
+  {"nombre":"Cúcuta","lat":7.894,"lon":-72.503},
+  {"nombre":"Neiva","lat":2.938,"lon":-75.280},
+  {"nombre":"Ibagué","lat":4.438,"lon":-75.232},
+  {"nombre":"Popayán","lat":2.444,"lon":-76.614},
+  {"nombre":"Montería","lat":8.750,"lon":-75.880},
+  {"nombre":"Sincelejo","lat":9.304,"lon":-75.397},
+  {"nombre":"Riohacha","lat":11.544,"lon":-72.907},
+  {"nombre":"Yopal","lat":5.348,"lon":-72.395},
+  {"nombre":"Leticia","lat":-4.215,"lon":-69.940}
+]
