@@ -343,7 +343,7 @@ setInterval(cargarAnomalias, 60000);
      =========================== -->
 <section id="futbol" class="container my-5">
   <h2 class="text-center" style="font-weight:700; color:#dc3545;">
-    ⚽ FÚTBOL (OpenLigaDB)
+    ⚽ FÚTBOL 
   </h2>
 
   <div class="text-center mb-3">
@@ -377,14 +377,16 @@ document.addEventListener("DOMContentLoaded", () => {
         return;
       }
 
-      // Diccionario de traducciones
+      // Diccionario de traducciones (alemán → español)
       const traducciones = {
         "Spieltag": "Jornada",
-        "Group Stage": "Fase de grupos",
-        "Round of 16": "Octavos de final",
-        "Quarterfinal": "Cuartos de final",
-        "Semifinal": "Semifinal",
-        "Final": "Final",
+        "Gruppenphase": "Fase de grupos",
+        "Achtelfinale": "Octavos de final",
+        "Viertelfinale": "Cuartos de final",
+        "Halbfinale": "Semifinal",
+        "Finale": "Final",
+        "Hinspiele": "Ida",
+        "Rückspiele": "Vuelta",
         "Germany": "Alemania",
         "Spain": "España",
         "France": "Francia",
@@ -394,13 +396,14 @@ document.addEventListener("DOMContentLoaded", () => {
         "Brazil": "Brasil",
         "Argentina": "Argentina",
         "Colombia": "Colombia"
-        // puedes seguir agregando más países/equipos
       };
 
       function traducir(texto) {
         let traducido = texto;
         Object.keys(traducciones).forEach(key => {
-          traducido = traducido.replace(key, traducciones[key]);
+          if (traducido.includes(key)) {
+            traducido = traducido.replace(key, traducciones[key]);
+          }
         });
         return traducido;
       }
@@ -408,8 +411,7 @@ document.addEventListener("DOMContentLoaded", () => {
       // Agrupar partidos por jornada/fase
       const jornadas = {};
       data.forEach(match => {
-        let jornada = match.group?.groupName ?? "Jornada";
-        jornada = traducir(jornada);
+        let jornada = traducir(match.group?.groupName ?? "Jornada");
         if (!jornadas[jornada]) jornadas[jornada] = [];
         jornadas[jornada].push(match);
       });
@@ -417,20 +419,26 @@ document.addEventListener("DOMContentLoaded", () => {
       let ordenJornadas;
       if (liga === "ucl" || liga === "wm26") {
         // Orden manual para fases de Champions y Mundial
-        const ordenFases = ["Final","Semifinal","Cuartos de final","Octavos de final","Fase de grupos","Jornada"];
+        const ordenFases = [
+          "Final",
+          "Semifinal Ida","Semifinal Vuelta",
+          "Cuartos de final Ida","Cuartos de final Vuelta",
+          "Octavos de final Ida","Octavos de final Vuelta",
+          "Fase de grupos",
+          "Jornada"
+        ];
         ordenJornadas = Object.keys(jornadas).sort((a,b) => {
           const idxA = ordenFases.findIndex(f => a.includes(f));
           const idxB = ordenFases.findIndex(f => b.includes(f));
           return idxA - idxB;
         });
       } else if (liga === "bl1") {
-        // Bundesliga: asegurar que Jornada 34 salga primero
+        // Bundesliga: ordenar descendente y forzar Jornada 34 al inicio
         ordenJornadas = Object.keys(jornadas).sort((a,b) => {
           const idA = jornadas[a][0].group?.groupId ?? 0;
           const idB = jornadas[b][0].group?.groupId ?? 0;
           return idB - idA;
         });
-        // mover Jornada 34 al inicio
         ordenJornadas = [
           ...ordenJornadas.filter(j => jornadas[j][0].group?.groupId === 34),
           ...ordenJornadas.filter(j => jornadas[j][0].group?.groupId !== 34)
@@ -489,6 +497,7 @@ document.addEventListener("DOMContentLoaded", () => {
   setInterval(cargarPartidos, 60000); // refresco cada 1 minuto
 });
 </script>
+
 
  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
 </body>
