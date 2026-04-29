@@ -92,8 +92,9 @@ cargarMunicipios();
         <p class="text-muted text-center">Cargando comparador...</p>
       </div>
     </section>
-      // --- COMPARADOR ---
-  async function cargarComparador() {
+     <!-- COMPARADOR -->
+  <script>
+async function cargarComparador() {
   const cont = document.getElementById("comparador-precios");
   cont.innerHTML = "<p class='text-muted text-center'>Cargando comparador...</p>";
 
@@ -106,17 +107,17 @@ cargarMunicipios();
     data.forEach(item => {
       let precioHTML = "";
 
-      // Definir ícono según servicio
-      let icono = "🍽️"; // por defecto restaurante
-      if (item.servicio === "Gimnasio") icono = "💪";
-      else if (item.servicio === "Hotel") icono = "🏨";
-      else if (item.servicio === "Domicilios") icono = "🚚";
+      // Definir ícono según servicio (ajustado a tu JSON real)
+      let icono = "🍽️"; 
+      if (item.servicio === "Restaurante") icono = "🍽️";
+      else if (item.servicio === "Gimnasio") icono = "💪";
       else if (item.servicio === "Fruber") icono = "🍎";
+      else if (item.servicio === "Domicilios") icono = "🚚";
+      else if (item.servicio === "Hotel") icono = "🏨";
 
       if (item.menu && Array.isArray(item.menu)) {
         precioHTML = "<ul class='list-unstyled'>";
         item.menu.forEach(m => {
-          // tomar cualquier campo distinto de precio
           const keys = Object.keys(m).filter(k => k !== "precio");
           const nombre = keys.length > 0 ? m[keys[0]] : "Producto/servicio";
           const precio = m.precio && m.precio.trim() !== "" ? m.precio : "Consultar en el local";
@@ -146,7 +147,8 @@ cargarMunicipios();
     console.error("Error cargarComparador:", e);
   }
 }
-  cargarComparador();
+cargarComparador();
+</script>
 
     <!-- Videos (penúltimos) -->
     <section class="row">
@@ -250,7 +252,7 @@ cargarMunicipios();
 
   </main>
 
-    // --- NOTICIAS DESDE BACKEND ---
+    <!-- NOTICIAS DESDE BACKEND -->
     async function cargarAnomalias() {
       const cont = document.getElementById("anomalias");
       cont.innerHTML = "<p class='text-muted'>Cargando noticias...</p>";
