@@ -384,16 +384,32 @@ document.addEventListener("DOMContentLoaded", () => {
         "Round of 16": "Octavos de final",
         "Quarterfinal": "Cuartos de final",
         "Semifinal": "Semifinal",
-        "Final": "Final"
+        "Final": "Final",
+        "Germany": "Alemania",
+        "Spain": "España",
+        "France": "Francia",
+        "England": "Inglaterra",
+        "Italy": "Italia",
+        "Portugal": "Portugal",
+        "Brazil": "Brasil",
+        "Argentina": "Argentina",
+        "Colombia": "Colombia"
+        // puedes seguir agregando más países/equipos
       };
+
+      function traducir(texto) {
+        let traducido = texto;
+        Object.keys(traducciones).forEach(key => {
+          traducido = traducido.replace(key, traducciones[key]);
+        });
+        return traducido;
+      }
 
       // Agrupar partidos por jornada/fase
       const jornadas = {};
       data.forEach(match => {
         let jornada = match.group?.groupName ?? "Jornada";
-        Object.keys(traducciones).forEach(key => {
-          jornada = jornada.replace(key, traducciones[key]);
-        });
+        jornada = traducir(jornada);
         if (!jornadas[jornada]) jornadas[jornada] = [];
         jornadas[jornada].push(match);
       });
@@ -407,8 +423,20 @@ document.addEventListener("DOMContentLoaded", () => {
           const idxB = ordenFases.findIndex(f => b.includes(f));
           return idxA - idxB;
         });
+      } else if (liga === "bl1") {
+        // Bundesliga: asegurar que Jornada 34 salga primero
+        ordenJornadas = Object.keys(jornadas).sort((a,b) => {
+          const idA = jornadas[a][0].group?.groupId ?? 0;
+          const idB = jornadas[b][0].group?.groupId ?? 0;
+          return idB - idA;
+        });
+        // mover Jornada 34 al inicio
+        ordenJornadas = [
+          ...ordenJornadas.filter(j => jornadas[j][0].group?.groupId === 34),
+          ...ordenJornadas.filter(j => jornadas[j][0].group?.groupId !== 34)
+        ];
       } else {
-        // Bundesliga: últimas jornadas primero
+        // otras ligas: orden descendente normal
         ordenJornadas = Object.keys(jornadas).sort((a,b) => {
           const idA = jornadas[a][0].group?.groupId ?? 0;
           const idB = jornadas[b][0].group?.groupId ?? 0;
@@ -419,8 +447,8 @@ document.addEventListener("DOMContentLoaded", () => {
       // Renderizar jornadas/fases
       container.innerHTML = ordenJornadas.map(jornada => {
         const partidos = jornadas[jornada].map(m => {
-          const home = m.team1?.teamName ?? "Local";
-          const away = m.team2?.teamName ?? "Visitante";
+          const home = traducir(m.team1?.teamName ?? "Local");
+          const away = traducir(m.team2?.teamName ?? "Visitante");
           const ultimoResultado = m.matchResults?.length > 0 ? m.matchResults.at(-1) : null;
           const marcador = ultimoResultado
             ? `${ultimoResultado.pointsTeam1} - ${ultimoResultado.pointsTeam2}`
@@ -458,7 +486,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
   cargarPartidos();
   filtroSelect.addEventListener("change", cargarPartidos);
-  setInterval(cargarPartidos, 300000);
+  setInterval(cargarPartidos, 60000); // refresco cada 1 minuto
 });
 </script>
 
