@@ -339,19 +339,17 @@ setInterval(cargarAnomalias, 60000);
     </div>
   </div>
     <!-- ===========================
-     Sección: Partidos
+     Sección: FÚTBOL
      =========================== -->
-<section id="partidos" class="container my-5">
+<section id="futbol" class="container my-5">
   <h2 class="text-center" style="font-weight:700; color:#dc3545;">
-    ⚽ Partidos (OpenLigaDB)
+    ⚽ FÚTBOL 
   </h2>
 
   <div class="text-center mb-3">
     <select id="ligaFiltro" class="form-select" style="max-width:320px; margin:auto;">
-      <option value="bl1">Bundesliga 2025</option>
-      <option value="pl">Premier League 2025</option>
-      <option value="cl">Champions League 2025</option>
-      <option value="laliga">LaLiga 2025</option>
+      <option value="bl1">Bundesliga 2025/2026</option>
+      <option value="cl">Liga de Campeones 2025/2026</option>
       <option value="wm">Copa del Mundo 2026</option>
     </select>
   </div>
@@ -388,21 +386,28 @@ document.addEventListener("DOMContentLoaded", () => {
         jornadas[jornada].push(match);
       });
 
+      // Ordenar jornadas por número de grupo (para que no se vean desordenadas)
+      const ordenJornadas = Object.keys(jornadas).sort((a, b) => {
+        const numA = jornadas[a][0].group?.groupId ?? 0;
+        const numB = jornadas[b][0].group?.groupId ?? 0;
+        return numA - numB;
+      });
+
       // Renderizar todas las jornadas/fases
-      container.innerHTML = Object.keys(jornadas).map(jornada => {
+      container.innerHTML = ordenJornadas.map(jornada => {
         const partidos = jornadas[jornada].map(m => {
           const home = m.team1?.teamName ?? "Local";
           const away = m.team2?.teamName ?? "Visitante";
           const marcador = m.matchResults?.[0]
             ? `${m.matchResults[0].pointsTeam1} - ${m.matchResults[0].pointsTeam2}`
             : "Pendiente";
-          const fecha = new Date(m.matchDateTime).toLocaleString();
+          const fecha = new Date(m.matchDateTime).toLocaleString("es-ES");
           const estado = m.matchIsFinished
             ? "Finalizado"
             : (new Date(m.matchDateTime) <= new Date() ? "En vivo" : "Programado");
 
           return `
-            <div class="card mb-2 shadow-sm" style="border-radius:10px;">
+            <div class="card mb-2 shadow-sm" data-estado="${estado}" style="border-radius:10px;">
               <div class="card-body text-center">
                 <div class="d-flex justify-content-between align-items-center mb-2">
                   <div><strong>${home}</strong></div>
@@ -434,6 +439,7 @@ document.addEventListener("DOMContentLoaded", () => {
   setInterval(cargarPartidos, 300000);
 });
 </script>
+
 
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
 </body>
