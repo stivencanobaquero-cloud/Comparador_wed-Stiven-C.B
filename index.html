@@ -23,11 +23,67 @@
 
     <!-- Clima -->
     <section class="my-5">
-      <h2 class="text-center text-primary mb-3"><i class="bi bi-cloud-sun"></i> Clima en Acacías</h2>
+      <h2 class="text-center text-primary mb-3"><i class="bi bi-cloud-sun"></i> Clima Colombia</h2>
       <div id="clima" class="card p-4 shadow text-center">
         <p>Cargando clima...</p>
       </div>
     </section>
+     <!-- Scripts -->
+   <select id="municipio" class="form-select mb-3">
+  <option value="">Seleccione un municipio</option>
+</select>
+<div id="clima"></div>
+
+<script src="weather-config.js"></script>
+<script>
+async function cargarMunicipios() {
+  const res = await fetch("colombia.json");
+  const municipios = await res.json();
+  const select = document.getElementById("municipio");
+
+  municipios.forEach(m => {
+    const opt = document.createElement("option");
+    opt.value = JSON.stringify({lat:m.lat, lon:m.lon, nombre:m.nombre});
+    opt.textContent = m.nombre;
+    select.appendChild(opt);
+  });
+
+  select.addEventListener("change", () => {
+    if (select.value) {
+      const {lat, lon, nombre} = JSON.parse(select.value);
+      cargarClima(lat, lon, nombre);
+    }
+  });
+}
+
+async function cargarClima(lat, lon, nombre) {
+  const cont = document.getElementById("clima");
+  cont.innerHTML = "<p class='text-muted'>Cargando clima...</p>";
+
+  if (typeof OPENWEATHER_KEY === "undefined" || !OPENWEATHER_KEY) {
+    cont.innerHTML = "<p class='text-danger'>Clave de OpenWeather no encontrada</p>";
+    return;
+  }
+
+  const url = `https://api.openweathermap.org/data/2.5/weather?lat=${lat}&lon=${lon}&units=metric&lang=es&appid=${OPENWEATHER_KEY}`;
+
+  try {
+    const res = await fetch(url);
+    const data = await res.json();
+    cont.innerHTML = `
+      <h4>${nombre}: ${data.weather[0].description}</h4>
+      <p>🌡️ Temperatura: <b>${data.main.temp} °C</b></p>
+      <p>💧 Humedad: <b>${data.main.humidity}%</b></p>
+      <p>🤒 Sensación térmica: <b>${data.main.feels_like} °C</b></p>
+      <p>💨 Viento: <b>${data.wind.speed} m/s</b></p>
+    `;
+  } catch (error) {
+    cont.innerHTML = "<p class='text-danger'>Error cargando clima</p>";
+  }
+}
+
+cargarMunicipios();
+</script>
 
     <!-- Guía Económica -->
     <section class="my-5">
@@ -126,62 +182,7 @@
     </div>
   </div>
 </section>
-  <!-- Scripts -->
-   <select id="municipio" class="form-select mb-3">
-  <option value="">Seleccione un municipio</option>
-</select>
-<div id="clima"></div>
-
-<script src="weather-config.js"></script>
-<script>
-async function cargarMunicipios() {
-  const res = await fetch("colombia.json");
-  const municipios = await res.json();
-  const select = document.getElementById("municipio");
-
-  municipios.forEach(m => {
-    const opt = document.createElement("option");
-    opt.value = JSON.stringify({lat:m.lat, lon:m.lon, nombre:m.nombre});
-    opt.textContent = m.nombre;
-    select.appendChild(opt);
-  });
-
-  select.addEventListener("change", () => {
-    if (select.value) {
-      const {lat, lon, nombre} = JSON.parse(select.value);
-      cargarClima(lat, lon, nombre);
-    }
-  });
-}
-
-async function cargarClima(lat, lon, nombre) {
-  const cont = document.getElementById("clima");
-  cont.innerHTML = "<p class='text-muted'>Cargando clima...</p>";
-
-  if (typeof OPENWEATHER_KEY === "undefined" || !OPENWEATHER_KEY) {
-    cont.innerHTML = "<p class='text-danger'>Clave de OpenWeather no encontrada</p>";
-    return;
-  }
-
-  const url = `https://api.openweathermap.org/data/2.5/weather?lat=${lat}&lon=${lon}&units=metric&lang=es&appid=${OPENWEATHER_KEY}`;
-
-  try {
-    const res = await fetch(url);
-    const data = await res.json();
-    cont.innerHTML = `
-      <h4>${nombre}: ${data.weather[0].description}</h4>
-      <p>🌡️ Temperatura: <b>${data.main.temp} °C</b></p>
-      <p>💧 Humedad: <b>${data.main.humidity}%</b></p>
-      <p>🤒 Sensación térmica: <b>${data.main.feels_like} °C</b></p>
-      <p>💨 Viento: <b>${data.wind.speed} m/s</b></p>
-    `;
-  } catch (error) {
-    cont.innerHTML = "<p class='text-danger'>Error cargando clima</p>";
-  }
-}
-
-cargarMunicipios();
-</script>
+  
 
     <!-- Noticias (últimas) -->
     <section class="my-5">
