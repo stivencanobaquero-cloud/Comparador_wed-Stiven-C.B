@@ -143,42 +143,70 @@ h2 {
    /* <-- aquí cierra el media query */
   }
 /* ===========================
-   Estilos para Partidos en vivo
+   Estilos para Partidos
    =========================== */
 #partidos h2 {
+  font-weight: 700;
   color: #dc3545;
-  border-bottom: 3px solid #007bff;
+  border-bottom: 4px solid #007bff;
+  display: inline-block;
+  padding-bottom: 6px;
+  margin-bottom: 25px;
+  background: linear-gradient(90deg, #ffefef, #ffffff);
+  border-radius: 8px;
 }
 
-#liveMatches {
+/* Contenedor de jornadas */
+#matchesContainer h4 {
+  font-weight: 700;
+  color: #007bff;
+  margin-top: 30px;
+  margin-bottom: 15px;
+  border-left: 5px solid #ffc107;
+  padding-left: 10px;
+}
+
+/* Grid de partidos */
+#matchesContainer {
   display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
-  gap: 16px;
+  grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+  gap: 20px;
 }
 
-#liveMatches .card {
+/* Tarjetas de partidos */
+#matchesContainer .card {
   border-radius: 12px;
   background: #ffffff;
   box-shadow: 0 2px 12px rgba(0,0,0,0.1);
   transition: transform 0.25s ease, box-shadow 0.25s ease;
+  border-left: 6px solid transparent;
 }
 
-#liveMatches .card:hover {
+/* Estados de partido */
+#matchesContainer .card[data-estado="En vivo"] {
+  border-left-color: #28a745; /* verde */
+}
+#matchesContainer .card[data-estado="Finalizado"] {
+  border-left-color: #dc3545; /* rojo */
+}
+#matchesContainer .card[data-estado="Programado"] {
+  border-left-color: #007bff; /* azul */
+}
+
+#matchesContainer .card:hover {
   transform: translateY(-5px);
   box-shadow: 0 6px 20px rgba(0,0,0,0.15);
 }
 
-#liveMatches .card-body h5 {
-  font-weight: 700;
-  color: #007bff;
-  margin-bottom: 8px;
-}
-
-#liveMatches .card-body p {
-  margin: 4px 0;
+#matchesContainer .card-body {
   font-size: 1rem;
   color: #333;
- }
+}
+
+#matchesContainer .card-body strong {
+  color: #444;
+}
+
 /* Playlist YouTube */
 #playlist {
   text-align: center;
@@ -198,8 +226,5 @@ h2 {
   overflow: hidden;
   box-shadow: 0 4px 16px rgba(0,0,0,0.2); /* sombra elegante */
 }
-
-
-
 
 
