@@ -338,19 +338,19 @@ setInterval(cargarAnomalias, 60000);
       </div>
     </div>
   </div>
-    <!-- ===========================
+   <!-- ===========================
      Sección: FÚTBOL
      =========================== -->
 <section id="futbol" class="container my-5">
   <h2 class="text-center" style="font-weight:700; color:#dc3545;">
-    ⚽ FÚTBOL 
+    ⚽ FÚTBOL (OpenLigaDB)
   </h2>
 
   <div class="text-center mb-3">
     <select id="ligaFiltro" class="form-select" style="max-width:320px; margin:auto;">
       <option value="bl1">Bundesliga 2025/2026</option>
-      <option value="cl">Liga de Campeones 2025/2026</option>
-      <option value="wm">Copa del Mundo 2026</option>
+      <option value="ucl">Liga de Campeones 2025/2026</option>
+      <option value="wm26">Copa del Mundo 2026</option>
     </select>
   </div>
 
@@ -365,7 +365,7 @@ document.addEventListener("DOMContentLoaded", () => {
   async function cargarPartidos() {
     container.innerHTML = "<p class='text-muted'>Cargando partidos...</p>";
     const liga = filtroSelect.value;
-    const season = liga === "wm" ? "2026" : "2025";
+    const season = liga === "wm26" ? "2026" : "2025";
     const url = `https://api.openligadb.de/getmatchdata/${liga}/${season}`;
 
     try {
@@ -381,16 +381,18 @@ document.addEventListener("DOMContentLoaded", () => {
       // Agrupar TODOS los partidos por jornada/fase
       const jornadas = {};
       data.forEach(match => {
-        const jornada = match.group?.groupName ?? "Jornada";
+        let jornada = match.group?.groupName ?? "Jornada";
+        // traducir Spieltag -> Jornada
+        jornada = jornada.replace("Spieltag", "Jornada");
         if (!jornadas[jornada]) jornadas[jornada] = [];
         jornadas[jornada].push(match);
       });
 
-      // Ordenar jornadas por número de grupo (para que no se vean desordenadas)
+      // Ordenar jornadas por groupId en orden inverso (últimas primero)
       const ordenJornadas = Object.keys(jornadas).sort((a, b) => {
-        const numA = jornadas[a][0].group?.groupId ?? 0;
-        const numB = jornadas[b][0].group?.groupId ?? 0;
-        return numA - numB;
+        const idA = jornadas[a][0].group?.groupId ?? 0;
+        const idB = jornadas[b][0].group?.groupId ?? 0;
+        return idB - idA; // inverso
       });
 
       // Renderizar todas las jornadas/fases
@@ -440,7 +442,6 @@ document.addEventListener("DOMContentLoaded", () => {
 });
 </script>
 
-
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+ <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
 </body>
 </html>
