@@ -370,7 +370,6 @@ document.addEventListener("DOMContentLoaded", () => {
 
     try {
       const res = await fetch(url);
-      if (!res.ok) throw new Error(`HTTP ${res.status}`);
       const data = await res.json();
 
       if (!Array.isArray(data) || data.length === 0) {
@@ -378,30 +377,53 @@ document.addEventListener("DOMContentLoaded", () => {
         return;
       }
 
-      // Agrupar TODOS los partidos por jornada/fase
+      // Diccionario de traducciones
+      const traducciones = {
+        "Spieltag": "Jornada",
+        "Group Stage": "Fase de grupos",
+        "Round of 16": "Octavos de final",
+        "Quarterfinal": "Cuartos de final",
+        "Semifinal": "Semifinal",
+        "Final": "Final"
+      };
+
+      // Agrupar partidos por jornada/fase
       const jornadas = {};
       data.forEach(match => {
         let jornada = match.group?.groupName ?? "Jornada";
-        // traducir Spieltag -> Jornada
-        jornada = jornada.replace("Spieltag", "Jornada");
+        Object.keys(traducciones).forEach(key => {
+          jornada = jornada.replace(key, traducciones[key]);
+        });
         if (!jornadas[jornada]) jornadas[jornada] = [];
         jornadas[jornada].push(match);
       });
 
-      // Ordenar jornadas por groupId en orden inverso (últimas primero)
-      const ordenJornadas = Object.keys(jornadas).sort((a, b) => {
-        const idA = jornadas[a][0].group?.groupId ?? 0;
-        const idB = jornadas[b][0].group?.groupId ?? 0;
-        return idB - idA; // inverso
-      });
+      let ordenJornadas;
+      if (liga === "ucl" || liga === "wm26") {
+        // Orden manual para fases de Champions y Mundial
+        const ordenFases = ["Final","Semifinal","Cuartos de final","Octavos de final","Fase de grupos","Jornada"];
+        ordenJornadas = Object.keys(jornadas).sort((a,b) => {
+          const idxA = ordenFases.findIndex(f => a.includes(f));
+          const idxB = ordenFases.findIndex(f => b.includes(f));
+          return idxA - idxB;
+        });
+      } else {
+        // Bundesliga: últimas jornadas primero
+        ordenJornadas = Object.keys(jornadas).sort((a,b) => {
+          const idA = jornadas[a][0].group?.groupId ?? 0;
+          const idB = jornadas[b][0].group?.groupId ?? 0;
+          return idB - idA;
+        });
+      }
 
-      // Renderizar todas las jornadas/fases
+      // Renderizar jornadas/fases
       container.innerHTML = ordenJornadas.map(jornada => {
         const partidos = jornadas[jornada].map(m => {
           const home = m.team1?.teamName ?? "Local";
           const away = m.team2?.teamName ?? "Visitante";
-          const marcador = m.matchResults?.[0]
-            ? `${m.matchResults[0].pointsTeam1} - ${m.matchResults[0].pointsTeam2}`
+          const ultimoResultado = m.matchResults?.length > 0 ? m.matchResults.at(-1) : null;
+          const marcador = ultimoResultado
+            ? `${ultimoResultado.pointsTeam1} - ${ultimoResultado.pointsTeam2}`
             : "Pendiente";
           const fecha = new Date(m.matchDateTime).toLocaleString("es-ES");
           const estado = m.matchIsFinished
@@ -436,8 +458,6 @@ document.addEventListener("DOMContentLoaded", () => {
 
   cargarPartidos();
   filtroSelect.addEventListener("change", cargarPartidos);
-
-  // Auto‑refresh cada 5 minutos
   setInterval(cargarPartidos, 300000);
 });
 </script>
