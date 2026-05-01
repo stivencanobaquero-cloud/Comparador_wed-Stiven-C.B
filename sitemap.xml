@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
+
+  <!-- Página principal -->
+  <url>
+    <loc>https://stivencanobaquero-cloud.github.io/futbol-peliculas-noticias/</loc>
+    <lastmod>2026-04-30</lastmod>
+    <priority>1.0</priority>
+  </url>
+
+  <!-- Sección de fútbol -->
+  <url>
+    <loc>https://stivencanobaquero-cloud.github.io/futbol-peliculas-noticias/futbol/</loc>
+    <lastmod>2026-04-30</lastmod>
+    <priority>0.9</priority>
+  </url>
+
+  <!-- Sección de películas -->
+  <url>
+    <loc>https://stivencanobaquero-cloud.github.io/futbol-peliculas-noticias/peliculas/</loc>
+    <lastmod>2026-04-30</lastmod>
+    <priority>0.8</priority>
+  </url>
+
+  <!-- Sección de noticias -->
+  <url>
+    <loc>https://stivencanobaquero-cloud.github.io/futbol-peliculas-noticias/noticias/</loc>
+    <lastmod>2026-04-30</lastmod>
+    <priority>0.8</priority>
+  </url>
+
+</urlset>
