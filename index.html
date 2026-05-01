@@ -388,7 +388,7 @@ document.addEventListener("DOMContentLoaded", () => {
       const dataLive = await resLive.json();
 
       if (dataLive.response && dataLive.response.length > 0) {
-        const partidos = dataLive.response.slice(0,5);
+        const partidos = dataLive.response.slice(0,7);
         let html = "";
 
         for (const m of partidos) {
